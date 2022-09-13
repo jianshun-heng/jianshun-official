@@ -66,13 +66,13 @@ params:
   #   textAlign: right # default: left
 
   color preference:
-    color:
-      textColor: #000000
-      secondaryTextColor: #000000
-      backgroundColor: #000000
-      secondaryBackgroundColor: #000000
-      primaryColor: #000000
-      secondaryColor: #000000
+    color: Navy Variant
+   #   textColor: #000000
+  #    secondaryTextColor: #000000
+   #   backgroundColor: #000000
+   #   secondaryBackgroundColor: #000000
+   #   primaryColor: #000000
+    #  secondaryColor: #000000
 
   # darkmode:
   #     textColor: White
