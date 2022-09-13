@@ -1,6 +1,6 @@
 baseURL: "https://jianshun-official.netlify.app/"
 languageCode: "en-us"
-title: "Hugo Profile"
+title: "Jian shun's Profile"
 theme: "hugo-profile"
 
 Paginate: 3
@@ -45,7 +45,7 @@ Menus:
     #   weight: 2
 
 params:
-  title: "Hugo Profile"
+  title: "Jian Shun's Profile"
   description: Text about my cool site
   # staticPath: ""  # The path to serve the static files from
   favicon: "/fav.png"
@@ -99,11 +99,11 @@ params:
   # Hero
   hero:
     enable: true
-    intro: "Hi, my name is"
-    title: "Isabella."
-    subtitle: "I build things for the web"
-    content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
-    image: /images/hero.svg
+    intro: "Welcome to "
+    title: "Jian Shun's world"
+    subtitle: "I hope you enjoy your stay"
+    content: "All models are wrong, but some are useful - George E.P. Box"
+    image: /images/Profile.png
     button:
       enable: true
       name: "Resume"
@@ -123,86 +123,98 @@ params:
   about:
     enable: true
     title: "About Me"
-    image: "/images/me.png"
+    image: /images/Me_HP.jpg
     content: |-
-      I am a software developer with a passion for web development. I have a background in computer science and mathematics, and I have a strong interest in the intersection of technology and art. I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. 
+      I am a Masters student at [London Business School](https://www.london.edu/) who is pursuing a [Masters in Analytics and Management](https://www.london.edu/masters-degrees/masters-in-analytics-and-management). I pursued an Economics undergraduate degree before venturing into Academia; I took up a position as a former research assistant in Marketing and worked on various projects then. 
 
-      I am currently working on a project that will be used to help people find the best way to get around the city.
+      I decided to leave Academia and venture into the realm of Analytics and Consultancy in hopes of developing my potential at making an impact on society.
     skills:
       enable: true
-      title: "Here are a few technologies I've been working with recently:"
+      title: "Here are a few technical skills that I have developed along the way:"
       items:
-        - "HTML"
-        - "CSS"
-        - "JavaScript"
-        - "React"
-        - "Node"
-        - "Express"
+        - "R"
+        - "SQL"
+        - "Python"
+        - "Tableau"
+        - "STATA"
+        - "Anylogic"
+        - "Vensim"
+        - "Microsoft Office"
 
   # Experience
   experience:
     enable: true
     # title: "Custom Name"
     items:
-      - job: "Senior Software Developer"
-        company: "Facebook"
-        companyUrl: "https://example.com"
-        date: "Jan 2022 - present"
+      - job: "Research Assistant"
+        company: "National University of Singapore"
+        companyUrl: "https://www.nus.edu.sg/"
+        date: "Jun 2021 - Jun 2022"
         featuredLink:
           enable: true
           name: "View the project"
           url: "https://example.com"
-        content: "I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city."
+        info:
+          enable: true
+          content: This was the time that I decided to pursue analytics
+        content: |
+          I was a researcher at the National University of Singapore (NUS) working on the [NUS SPIRE Project](https://bizfaculty.nus.edu.sg/spire/), an inter-discplinary study spanning across the Economics, Marketing and Sociology fields.
 
-      - job: "Software Developer"
-        company: "Amazon"
-        companyUrl: "https://example.com"
+          - Served as the main econometric analyst for a 4-year long inter-disciplinary project studying the rise of the Chinese Communist Party in the 1940s where I performed quantitative data analysis using econometric and statistical models
+            - Used conditional logit regression, spatial regression and mediation analysis via programming software STATA and R
+          - Partnered a small foreign bank to increase its efficiency of debt collection
+            - Performed data extraction and cleaning, followed by natural language processing (NLP) analysis and data visualisation using R
+
+      - job: "Intern"
+        company: "Monetary Authority of Singapore"
+        companyUrl: "https://www.mas.gov.sg/"
         date: "Sep 2020 - Dec 2021"
         featuredLink:
           enable: true
           url: "https://example.com"
         info:
           enable: true
-          content: I worked as a software developer for more than one year in Amazon.
+          content: This was my first internship ever!
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          I interned at the Monetary Authority of Singapore (MAS), the central bank within Singapore, CA.
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
+          - Proposed the inception of a novel special purpose reinsurance vehicle after executing jurisdictional scans across selected countries worldwide and brainstorming regulatory mechanisms
+          - Analysed driving forces behind trends within the insurance industry to identify patterns on both sector and company levels and to assess the risk and financial health of each insurer within the nation
+    
 
-      - job: "Junior Software Developer"
-        company: "Apple"
+      - job: "Photography and Photo Editing"
+        company: "Freelance"
         companyUrl: "https://example.com"
-        date: "Jan 2020 - Aug 2020"
+        date: "Jan 2020 - Present"
         info:
-          enable: false
+          enable: true
+          content: Samples of my photoshoots can be found in the Gallery section
         featuredLink:
           enable: true
           url: "https://example.com"
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          I have always been an avid explorer who enjoyed documenting my escapades around the globe. After I purchased my first DSLR camera, there was no going back
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
+          - Dabbled in landscape photography and astrophotography
+          - Learnt various photo-editing tools such as Photoshop and Lightroom
 
-      - job: "UI/UX Designer"
-        company: "Netflix"
-        companyUrl: "https://example.com"
-        date: "June 2017 - Nov 2019"
+
+      - job: "Soldier (Military, National Service)"
+        company: "Republic of Singapore Air Force "
+        companyUrl: "https://www.mindef.gov.sg/web/portal/rsaf/home/"
+        date: "June 2015 - Dec 2016"
         featuredLink:
           enable: true
           url: "https://example.com"
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          I served in the Air Force for my country's national service over the course of 2 years
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
+          - Selected as 1 of 13 Air Traffic Controller Officers for fighter aircrafts and underwent rigorous training that involved heavy multitasking, communications coordination and split-second decisions
+            - Suffered an ACL tear in the left knee in the process and went out-of-course as a result
+          - Served as an operations controller in an operations room at a squadron overseeing the logistical needs of an Airbase
+            - Received the Outstanding Serviceman of the Month Award
+            - Prepared and conducted daily briefings to a squadron of 100 soldiers including senior officers
 
-      - job: "Product Designer"
-        company: "Google"
-        companyUrl: "https://example.com"
-        date: "Feb 2016 - Mar 2017"
-        content: "I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city."
 
   # Education
   education:
