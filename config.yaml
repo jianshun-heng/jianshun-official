@@ -14,7 +14,7 @@ markup:
 
 Menus:
   main:
-    - identifier: blog
+    - identifier: blogs
       name: Projects
       title: My Projects
       url: /blogs
@@ -103,7 +103,7 @@ params:
     title: "Jian Shun's world"
     subtitle: "I hope you enjoy your stay"
     content: "All models are wrong, but some are useful - George E.P. Box"
-    image: /images/Profile.png
+    image: /images/ProfileMe.jpg
     button:
       enable: true
       name: "Resume"
