@@ -107,7 +107,7 @@ params:
     button:
       enable: true
       name: "Resume"
-      url: "#"
+      url: /(4 Sep 2022) UK Version Resume.pdf
       download: true 
     socialLinks:
       fontAwesomeIcons:

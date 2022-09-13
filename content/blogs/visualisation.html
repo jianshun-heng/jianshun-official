@@ -25,8 +25,8 @@ output:
 
 
 
-<div id="challenge-1-brexit-plot" class="section level1">
-<h1>Challenge 1: Brexit plot</h1>
+<div id="brexit-plot" class="section level1">
+<h1>Brexit plot</h1>
 <p>Using your data manipulation and visualisation skills, please use the Brexit results dataframe (the same dataset you used in the pre-programme assignement) and produce the following plot. Use the correct colour for each party; google “UK Political Party Web Colours” and find the appropriate hex code for colours, not the default colours that R gives you.</p>
 <pre><code>## Rows: 632
 ## Columns: 11
@@ -282,7 +282,7 @@ output:
 </tr>
 </tbody>
 </table>
-<p><img src="/blogs/homework3_final_group1_files/figure-html/brexit_challenge-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/visualisation_files/figure-html/brexit_challenge-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><u><strong>NOTE:</strong></u></p>
 <p>The plot shows several interesting patterns. Generalizing conclusions should made cautiously which is why especially the relationship of the parliament constituencies’ share of votes for the labour and/or conservative party and the corresponding leave share votes should not be over interpreted. However, the stronger trends for the Liberal Democrats as well as the Independent Party may show some interesting tendencies. While parliament constituencies in which the vote share for the Liberal Democrats was relatively low showed above 50% vote shares for Brexit, this vote share quickly depletes as the share of Liberal Democrats affiliation increases. An inverse relation with stronger magnitude is to be observed for the UKIP. In underrepresented parliament constituencies the vote share to leave the EU was relatively low but strongly increases as the affiliation to the UKIP grows. At around 20% representation of the UKIP in the parliament constituencies the vote shares were up to 75%. This finding should not come as a surprise, as the main campaign positions of the UKIP was to be independent of the EU whereas the Liberal Democrats campaigned to stay.</p>
 </div>
@@ -371,7 +371,7 @@ ggplot(df, aes(x = Year, y = Values, group = Ind_id, colour = factor(Ind_id))) +
         legend.title = element_text(size=10), #change legend title font size
         legend.text = element_text(size=8), #change legend text font size
         legend.position = &quot;right&quot;)</code></pre>
-<p><img src="/blogs/homework3_final_group1_files/figure-html/GDP%20Components%20over%20time%20for%203%20countries-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/visualisation_files/figure-html/GDP%20Components%20over%20time%20for%203%20countries-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>Secondly, recall that GDP is the sum of Household Expenditure (Consumption <em>C</em>), Gross Capital Formation (business investment <em>I</em>), Government Expenditure (G) and Net Exports (exports - imports). Even though there is an indicator <code>Gross Domestic Product (GDP)</code> in your dataframe, I would like you to calculate it given its components discussed above.</p>
 <blockquote>
 <p>What is the % difference between what you calculated as GDP and the GDP figure included in the dataframe?</p>
@@ -412,7 +412,7 @@ ggplot(manual_GDP_df, aes(x = Year, y = Values, group = Ind_id, colour = factor(
         legend.title = element_text(size=10), #change legend title font size
         legend.text = element_text(size=8), #change legend text font size
         legend.position = &quot;right&quot;)</code></pre>
-<p><img src="/blogs/homework3_final_group1_files/figure-html/gdp2%20replicate-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/visualisation_files/figure-html/gdp2%20replicate-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p><u><strong>NOTE:</strong></u></p>
 <p>As the graphs show, there is a small, but undeniable difference between the sum of all GDP components and the UN reported total GDP value. This might be surprising at first, but as clarified earlier, the calculation of the GDP as the sum of government spending, consumption, investments plus the net exports is rather of a simplistic nature. Simultaneously, it is very difficult to estimate the exact values for each individual component of GDP. We believe that in order to calculate the various components, the UN might have used adjusted values for a better estimate. Similarly, to not be effected by the many assumptions made to calculate the individual components, the UN might have opted to extrapolate the GDP total value based on a different, more rigorous approach.</p>
 <p>The graphs do hint at another anomaly. There is a clear difference between the countries in terms of the accuracy of the sum of GDP’s components and the UN’s reported GDP value. Whilst it seems as if the values for Germany and the United Stated have aligned with the reported GDP amount, the GDP estimate for India remains different until the present day. This might be down to the relatively high quality of data for Germany’s and the USA’s economy as opposed to the data on India’s economy. Therefore, the UN might have been forced to fall back on assumptions and estimations that lead to less accurate representations of the true values.</p>

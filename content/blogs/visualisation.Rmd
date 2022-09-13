@@ -55,7 +55,7 @@ library(openintro)
 ```
 
 
-# Challenge 1: Brexit plot
+# Brexit plot
 
 Using your data manipulation and visualisation skills, please use the Brexit results dataframe (the same dataset you used in the pre-programme assignement) and produce the following plot. Use the correct colour for each party; google "UK Political Party Web Colours" and find the appropriate hex code for colours, not the default colours that R gives you.
 
