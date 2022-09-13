@@ -65,22 +65,22 @@ params:
   #   lineHeight: 1 # default: 1.5
   #   textAlign: right # default: left
 
-  # color preference
-  # color:
-  #   textColor:
-  #   secondaryTextColor:
-  #   backgroundColor:
-  #   secondaryBackgroundColor:
-  #   primaryColor:
-  #   secondaryColor:
+  color preference:
+    color:
+      textColor: #000000
+      secondaryTextColor: #000000
+      backgroundColor: #000000
+      secondaryBackgroundColor: #000000
+      primaryColor: #000000
+      secondaryColor: #000000
 
-  #   darkmode:
-  #     textColor:
+  # darkmode:
+  #     textColor: White
   #     secondaryTextColor:
-  #     backgroundColor:
-  #     secondaryBackgroundColor:
-  #     primaryColor:
-  #     secondaryColor:
+  #     backgroundColor: "Black""
+  #     secondaryBackgroundColor: Grey
+  #     primaryColor: White
+  #     secondaryColor: Yellow
 
   # If you want to customize the menu, you can change it here
   # navbar:
@@ -115,9 +115,9 @@ params:
           url: https://github.com/jianshun-heng
        # - icon: fab fa-twitter
        #   url: https://example.com
-        - con: fab fa-instagram
+        - icon: fab fa-instagram
           url: https://www.instagram.com/gonewiththe_winds/
-        - con: fab fa-instagram
+        - icon: fab fa-linkedin
           url: https://www.linkedin.com/in/heng-jian-shun/         
       customIcons:
         - icon: /fav.png
