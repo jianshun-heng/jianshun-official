@@ -1,0 +1,113 @@
+---
+author: Jian Shun
+date: "`r Sys.Date()`"
+description: ""
+draft: false
+#github_link: https://github.com/gurusabarish/hugo-profile
+image: /images/Waves.jpg
+tags:
+- Visualisation
+- Political
+- Comparison
+title: Amounts raised from political contributions in California
+toc: null
+
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+```
+
+
+# Challenge 2: 2016 California Contributors plots
+
+To get this plot, you must join two dataframes; the one you have with all contributions, and data that can translate zipcodes to cities. You can find a file with all US zipcodes, e.g., here <http://www.uszipcodelist.com/download.html>.
+
+The easiest way would be to create two plots and then place one next to each other. For this, you will need the `patchwork` package. <https://cran.r-project.org/web/packages/patchwork/index.html>
+
+While this is ok, what if one asked you to create the same plot for the top 10 candidates and not just the top two? The most challenging part is how to reorder within categories, and for this you will find Julia Silge's post on [REORDERING AND FACETTING FOR GGPLOT2](https://juliasilge.com/blog/reorder-within/) useful.
+
+```{r, load_CA_data, warnings= FALSE, message=FALSE}
+# Make sure you use vroom() as it is significantly faster than read.csv()
+# Load datasets
+CA_contributors_2016 <- vroom::vroom(here::here("data","CA_contributors_2016.csv"))
+
+zipcodes <- read_csv(here::here("data", "zip_code_database.csv"))
+
+# Glimpse datasets
+glimpse(CA_contributors_2016)
+glimpse(zipcodes)
+
+# Join datasets (note that zip types are different across both datasets)
+# Therefore we change them to be the same so that the datasets can be joined
+CA_contributors_2016$zip<-as.character(CA_contributors_2016$zip)
+df <- left_join(CA_contributors_2016, zipcodes, "zip")
+
+# Summarise total contributions raised by the top 10 candidates across every city
+top_10_cand_overall <- df %>% 
+  group_by(cand_nm) %>%
+  summarize(total = sum(contb_receipt_amt)) %>%
+  arrange(desc(total)) %>% 
+  top_n(10)
+
+# Create long form data to incude only the top 10 candidates
+long_form_top10_cand_all_cities <- df %>% 
+  filter(cand_nm %in% top_10_cand_overall$cand_nm) %>% 
+  group_by(cand_nm, primary_city) %>%
+  summarise(total_contrib = sum(contb_receipt_amt))
+
+# From previous dataset, create a table for the top 10 candidates across the top 10 cities
+# Incorporate the use of reorder_within to reorder within a group
+top_10_cities_per_cand <- long_form_top10_cand_all_cities %>% 
+  group_by(cand_nm) %>% 
+  top_n(10, total_contrib) %>% 
+  ungroup() %>%
+  mutate(cand_nm = as.factor(cand_nm),
+         primary_city = tidytext::reorder_within(primary_city, total_contrib, cand_nm)) 
+
+# Plot faceted plots for each of the top 10 candidates across their respective top 10 cities
+ggplot(top_10_cities_per_cand , aes(total_contrib, primary_city))+
+  geom_col(aes(fill = cand_nm), show.legend = FALSE) +
+  facet_wrap(~ cand_nm, ncol = 2, scales = "free") +
+  tidytext::scale_y_reordered() +
+  labs(title = "Comparisonn of contribution amounts raised", subtitle = "In which cities did the top 10 candidates raise the most money?", x = "Amount raised", y = "City") +
+  theme(axis.title = element_text(size = 14),
+          axis.text = element_text(size = 8),
+          strip.text = element_text(size = 5),
+          strip.background = element_rect(fill="lightblue", colour="black", size=1))+
+  scale_x_continuous(labels = ~ format(.x, scientific = FALSE),
+                     sec.axis = sec_axis(~ . , name = "Candidates", breaks = NULL, labels = NULL))
+
+```

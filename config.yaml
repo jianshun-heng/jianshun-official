@@ -57,7 +57,7 @@ params:
 
   theme:
     disableThemeToggle: false
-    # defaultTheme: "light" # dark
+    defaultTheme: "dark" # light
 
   # font:
   #   fontSize: 1.5rem # default: 1rem
@@ -65,8 +65,8 @@ params:
   #   lineHeight: 1 # default: 1.5
   #   textAlign: right # default: left
 
-  color preference:
-    color: Navy Variant
+ # color preference:
+   # color: Navy Variant
    #   textColor: #000000
   #    secondaryTextColor: #000000
    #   backgroundColor: #000000
@@ -187,7 +187,7 @@ params:
     
 
       - job: "Photography and Photo Editing"
-        company: "Freelance"
+        company: "Recreational Photography"
         companyUrl: "https://example.com"
         date: "Jan 2020 - Present"
         info:
@@ -226,61 +226,62 @@ params:
     # title: "Custom Name"
     # index: true
     items:
-      - title: "Master of Business Administration"
+      - title: "Master of Analytics and Management"
         school:
-          name: "University of California, Berkeley"
-          url: "https://example.org"
-        date: "2013 - 2015"
-        GPA: "3.8 out of 5.0"
+          name: "London Business School (LBS)"
+          url: "https://www.london.edu/masters-degrees/masters-in-analytics-and-management"
+        date: "2022 - present"
+        #GPA: "3.8 out of 5.0"
         content: |-
           Extracurricular Activities
             - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
             - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
-      - title: "Bachelor of Science in Computer Science"
+      - title: "Bachelor of Social Sciences with Honours (Economics)"
         school:
-          name: "Massachusetts Institute of Technology"
-          url: "https://example.org"
-        date: "2009 - 2013"
-        GPA: "3.9 out of 5.0"
+          name: "National University of Singapore (NUS)"
+          url: "https://fass.nus.edu.sg/ecs/"
+        date: "2017 - 2021"
+        GPA: "4.85 out of 5.0"
         content: |-
-          I Publiced two papers in the ACM SIGCHI Conference on Artificial Intelligence.
-          - [Fast and Accurate Object Detection with a Single Convolutional Neural Network](https://example.com)
-          - Face mask detection using a single convolutional neural network.
+          - First Class Honours
+          - Dean's Scholars List (Top 1% of faculty), Faculty of Arts and Social Sciences (2019/2020)
+          - Dean's List (Top 5% of faculty), Faculty of Arts and Social Sciences (2018/2019)
+          - Student Exchange Programme to Stockholm School of Economics
 
           Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
+            - Competed in Inter-Faculty and Inter-College competitions for 3 consecutive years in both Table Tennis and Tchoukball
+            - Member at NUS Recreational Volleyball Club
         featuredLink:
           enable: true
-          name: "My academic record"
-          url: "https://example.com"
-      - title: "High School"
-        school:
-          name: "Thomas Jefferson High School for Science and Technology."
-          url: "https://example.org"
-        GPA: "4.2 out of 5.0"
-        featuredLink:
-          enable: true
-          url: "https://example.com"
+          name: "Academic Transcript"
+          url: /Official transcript.pdf
+     # - title: "High School"
+      #  school:
+      #    name: "Thomas Jefferson High School for Science and Technology."
+      #    url: "https://example.org"
+      #  GPA: "4.2 out of 5.0"
+      #  featuredLink:
+      #    enable: true
+      #    url: "https://example.com"
 
   # Achievements
   achievements:
     enable: true
-    # title: "Custom Name"
+    # title: "Additional Information"
     items:
-      - title: Google kickstart runner
-        content: I solved all problems with optimal solution.
+      - title: Captain of Junior College Tchoukball team
+        content: Led team to win league 2 years in a row. 
         url: https://example.com
-      - title: Facebook Hackathon Winner
-        content: Developed a product using Artificial Intelligence.
-      - title: Hugo Profile
-        content: Developed a theme and getting 1K+ downloads per month.
-        url: "https://github.com/gurusabarish/hugo-profile"
-      - title: Microsoft Imagine Runner
-        content: We are developed a product which can help others.
-      - title: Google Summer of Code
-        content: Contributed to a open source project.
-        url: https://example.com
+      - title: Coach and Manager (Tchoukball)
+        content: Held coach and team manager roles in 8 different tchoukball teams over 6 years; these teams achieved various podium finishes in various annual leagues
+      - title: Simulations modeller
+        content: Spent 2 years in an external university program studying simulations modeling skills such as System Dynamics and Agent Based modelling; software such as Vensim and Java-based AnyLogic were used.
+      #  url: "https://github.com/gurusabarish/hugo-profile"
+      - title: Self-taught pianisst
+        content: Learnt the piano over the course of 12 years. Transitioned from classical music to movie soundtrack epics and pop pieces 
+    #  - title: Google Summer of Code
+     #   content: Contributed to a open source project.
+      #  url: https://example.com
 
   # projects
   #projects:
@@ -337,14 +338,14 @@ params:
     enable: true
     #title: "Custom name"
     content: My inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!
-    email: gurusabarisha@gmail.com
-    btnName: Mail me
+    email: jianshun252@gmail.com
+    btnName: Mail me!
 
   footer:
     # recentPosts: false
     socialNetworks:
-      github: https://github.com
-      linkedin: https://linkedin.com
-      twitter: https://twitter.com
-      instagram: https://instagram.com
-      facebook: https://facebook.com
+      github: https://github.com/jianshun-heng
+      linkedin: https://www.linkedin.com/in/heng-jian-shun/
+    #  twitter: https://twitter.com
+      instagram: https://www.instagram.com/gonewiththe_winds/
+    # facebook: https://facebook.com

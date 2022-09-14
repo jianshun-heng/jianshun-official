@@ -1,0 +1,147 @@
+---
+author: Jian Shun
+date: "2022-09-14"
+description: ""
+draft: false
+#github_link: https://github.com/gurusabarish/hugo-profile
+image: /images/Waves.jpg
+tags:
+- Visualistion
+- Bike
+- Trend
+title: Bike sharing in London
+toc: null
+
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+
+<div id="challenge-1-excess-rentals-in-tfl-bike-sharing" class="section level1">
+<h1>Challenge 1: Excess rentals in TfL bike sharing</h1>
+<p>Recall the TfL data on how many bikes were hired every single day. We
+can get the latest data by running the following</p>
+<pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
+
+# Download TFL data to temporary file
+httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
+<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2022-09-06T12%3A41%3A48/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20220913%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20220913T231812Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=8daf53bf545aeeb24c700bc5f023ce595a9af6cdefbb08a01ae6a0dde5d12a07&amp;X-Amz-SignedHeaders=host]
+##   Date: 2022-09-13 23:18
+##   Status: 200
+##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+##   Size: 180 kB
+## &lt;ON DISK&gt;  C:\Users\ASUS\AppData\Local\Temp\Rtmpacg930\file38dc2a31474.xlsx</code></pre>
+<pre class="r"><code># Use read_excel to read it as dataframe
+bike0 &lt;- read_excel(bike.temp,
+                   sheet = &quot;Data&quot;,
+                   range = cell_cols(&quot;A:B&quot;))
+
+# change dates to get year, month, and weeks
+bike &lt;- bike0 %&gt;% 
+  clean_names() %&gt;% 
+  rename (bikes_hired = number_of_bicycle_hires) %&gt;% 
+  mutate (year = year(day),
+          month = lubridate::month(day, label = TRUE),
+          week = isoweek(day))</code></pre>
+<p>The second one looks at percentage changes from the expected level of
+weekly rentals. The two grey shaded rectangles correspond to Q2 (weeks
+14-26) and Q4 (weeks 40-52).</p>
+<p>For both of these graphs, you have to calculate the expected number of
+rentals per week or month between 2016-2019 and then, see how each
+week/month of 2020-2022 compares to the expected rentals. Think of the
+calculation <code>excess_rentals = actual_rentals - expected_rentals</code>.</p>
+<p>We should use the mean to calculate expected rentals. In our case, we
+wanted to smooth (by averaging) all of the data, including anomalies,
+across the years for rentals within each month/week; this gives a
+clearer picture of an “average” for each time period since the median
+statistic would automatically exclude the effects of outliers.</p>
+<pre class="r"><code># Create expected monthly bike rental by averaging monthly data from 2016-2019
+expected_monthly_rental_summary &lt;- bike %&gt;% 
+  filter(year &gt;= 2016 &amp; year &lt;= 2019) %&gt;% 
+  group_by(month) %&gt;% 
+  summarise(expected_rental_mean = mean(bikes_hired, na.rm = TRUE))
+
+# Create actual monthly bike rental data from 2017-2022
+monthly_summary_17_22 &lt;- bike %&gt;% 
+  filter(year &gt;= 2017) %&gt;% 
+  group_by(year, month) %&gt;% 
+  summarise(monthly_mean = mean(bikes_hired))
+
+# Join both tables
+monthly_full_summary &lt;- monthly_summary_17_22 %&gt;% 
+  left_join(y = expected_monthly_rental_summary, by = &quot;month&quot;)
+
+# Plot monthly changes in bike rentals faceted on year
+ggplot(monthly_full_summary) +
+  geom_line(aes(x = month, y = monthly_mean, group = year), colour = &quot;black&quot;, show.legend = FALSE) + #Line created for actual bike rental
+  geom_line(aes(x = month, y = expected_rental_mean, group = year), colour = &quot;blue&quot;, size = 1.2, show.legend = FALSE) + #Line created for expected bike rental
+  facet_wrap(~ year) +
+  geom_ribbon(aes(x = month, ymin = monthly_mean, ymax = pmax(monthly_mean, expected_rental_mean), group = year, fill = &quot;red&quot;), alpha = 0.3, show.legend = FALSE) + #Ribbon created for expected&gt;actual
+  geom_ribbon(aes(x = month, ymin = expected_rental_mean, ymax = pmax(monthly_mean, expected_rental_mean), group = year, fill = &quot;green&quot;), alpha = 0.3, show.legend = FALSE)  + #Ribbon created using actual&gt;expected
+  scale_fill_manual(values=c(&quot;green&quot;, &quot;red&quot;), name=&quot;fill&quot;) + #change colour fill of ribbons
+  labs(title = &quot;Monthly Changes in TfL bike rentals&quot;, subtitle = &quot;Change from monthly average calculated between 2016 annd 2019&quot;, x = &quot;Month&quot;, y = &quot;Bike Rentals&quot;) +
+  theme_light() +
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        axis.text.x = element_text(angle = 90),
+        strip.text.x = element_text(size = 10)) </code></pre>
+<p><img src="/blogs/Bike_sharing_files/figure-html/monthly%20stats-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create expected weekly bike rental by averaging weekly data from 2016-2019
+expected_weekly_rental_summary &lt;- bike %&gt;% 
+  filter(year &gt;= 2016 &amp; year &lt;= 2019) %&gt;% 
+  group_by(week) %&gt;% 
+  summarise(expected_rentals = mean(bikes_hired, na.rm = TRUE))
+
+# Create actual weekly bike rental data from 2017-2022
+weekly_summary_17_22 &lt;- bike %&gt;% 
+  filter(year &gt;= 2017) %&gt;% 
+  group_by(year, week) %&gt;% 
+  summarise(weekly_mean = mean(bikes_hired))
+
+# Join both tables and create new column measuring weekly percent deviation
+weekly_full_summary &lt;- weekly_summary_17_22 %&gt;% 
+  left_join(y = expected_weekly_rental_summary, by = &quot;week&quot;) %&gt;%
+  mutate(percent_change_weekly = (weekly_mean/expected_rentals - 1) * 100) %&gt;%
+  filter(!(week &gt;= 52 &amp; year == 2022)) %&gt;% #filter date anomalies (due to the way R defines week 52 and 53)
+  mutate(up = ifelse(percent_change_weekly &gt; 0, 1, &quot;&quot;)) %&gt;%
+  mutate(down = ifelse(percent_change_weekly &lt; 0, 1, &quot;&quot;)) #Create up and down columns for rugs later
+  
+# Plot weekly percent deviation in bike rentals faceted on year
+ggplot(weekly_full_summary, aes(x = week)) +
+  facet_wrap(~ year) +
+  geom_rect(aes(xmin = 14, xmax = 26, ymin = -50, ymax = 100), fill = &quot;grey&quot;, alpha = 0.1) + #Create rectangle representing Q2
+  geom_rect(aes(xmin = 40, xmax = 52, ymin = -50, ymax = 100), fill = &quot;grey&quot;, alpha = 0.1) + #Create rectangle representing Q4
+  geom_line(aes(y = percent_change_weekly), show.legend = FALSE) + 
+  geom_ribbon(aes(ymin = 0, ymax = pmin(0,percent_change_weekly)), alpha = 0.3, fill = &quot;red&quot;, show.legend = FALSE) +
+  geom_ribbon(aes(ymin = percent_change_weekly, ymax = pmin(0,percent_change_weekly)), fill = &quot;green&quot;, alpha = 0.3, show.legend = FALSE) + #Create ribbons
+  geom_rug(data = subset(weekly_full_summary, up == 1), color = &quot;green&quot;, sides = &quot;b&quot;, show.legend = FALSE) + #Create green rugs
+  geom_rug(data = subset(weekly_full_summary, down == 1), color = &quot;red&quot;, sides = &quot;b&quot;, show.legend = FALSE) + #Create red rugs
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(title = &quot;Weekly Changes in TfL bike rentals&quot;, subtitle = &quot;% change from weekly average calculated between 2016 annd 2019&quot;, x = &quot;Week&quot;, y = &quot;Bike Rentals&quot;) +
+  theme_light() +
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        strip.text.x = element_text(size = 10))</code></pre>
+<p><img src="/blogs/Bike_sharing_files/figure-html/weekly%20stats-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><u><strong>NOTE:</strong></u></p>
+<p>We see that during the beginning of coronavirus lockdown periods, we
+observed a notable reduction in bike rentals. Conversely, past the
+lifting of general coronavirus measures in mid 2021, we have seen
+consistent positive excess rentals compared to the mean 2016-2019 bike
+rentals; this suggests that the local population was particularly
+inclined to get out of the house and into the fresh air by cycling more
+regularly. A similar pattern can be observed for the weekly analysis of
+bike rentals; bike rentals by more than 50%, as compared to the period
+from 2016-2019, in most weeks after the lockdown measures were lifted.</p>
+</div>
