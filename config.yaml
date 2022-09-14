@@ -195,7 +195,8 @@ params:
           content: Samples of my photoshoots can be found in the Gallery section
         featuredLink:
           enable: true
-          url: "https://example.com"
+          name: "Gallery"
+          url: "https://jianshun-official.netlify.app/gallery/"
         content: |
           I have always been an avid explorer who enjoyed documenting my escapades around the globe. After I purchased my first DSLR camera, there was no going back
 
