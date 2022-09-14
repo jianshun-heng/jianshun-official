@@ -3,12 +3,28 @@ date: "2022-06-25T18:35:46+05:30"
 description: 'My gallery :earth_asia:'
 draft: false
 images:
-- src: /images/Waves.jpg
-- src: /images/Pulau Ubin.jpg
-- src: https://thumbs.dreamstime.com/b/team-ants-council-collective-decision-work-17037482.jpg
-- src: https://thumbs.dreamstime.com/b/summer-day-smiling-women-relax-wearing-red-dress-fashion-standing-wooden-bridge-over-sea-blue-sky-background-summer-107411998.jpg
-- src: https://thumbs.dreamstime.com/b/young-woman-playing-dog-pet-beach-sunrise-sunset-girl-dog-having-fun-seasid-seaside-cute-neglected-stay-66480218.jpg
-- src: https://thumbs.dreamstime.com/b/funny-picture-taken-sunrise-frozen-lake-perspective-rider-retro-bicycle-sunrise-personal-211066044.jpg
+- src: /images/Gallery/Sun1.jpg
+- src: /images/Gallery/Sun2.jpg
+- src: /images/Gallery/Sun3.jpg
+- src: /images/Gallery/Snow1.jpg
+- src: /images/Gallery/Snow2.jpg
+- src: /images/Gallery/Snow3.jpg
+- src: /images/Gallery/Sun4.jpg
+- src: /images/Gallery/Sun5.jpg
+- src: /images/Gallery/Sun6.jpg
+- src: /images/Gallery/Night1.jpg
+- src: /images/Gallery/Night2.jpg
+- src: /images/Gallery/Night3.jpg
+- src: /images/Gallery/Sunrise1.jpg
+- src: /images/Gallery/Sunrise2.jpg
+- src: /images/Gallery/Sunset1.jpg
+- src: /images/Gallery/Others1.jpg
+- src: /images/Gallery/Others2.jpg
+- src: /images/Gallery/Others3.jpg
+- src: /images/Gallery/Sunset1.jpg
+- src: /images/Gallery/Flower1.jpg
+- src: /images/Gallery/Flower2.jpg
+- src: /images/Gallery/Flower3.jpg
 layout: gallery
 title: Image Gallery
 ---

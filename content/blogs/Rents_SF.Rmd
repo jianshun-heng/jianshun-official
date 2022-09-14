@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 description: ""
 draft: false
 #github_link: https://github.com/gurusabarish/hugo-profile
-image: /images/Waves.jpg
+image: /images/rent.jpg
 tags:
 - Visualisation
 - Housing

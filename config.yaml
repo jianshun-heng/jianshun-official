@@ -15,8 +15,8 @@ markup:
 Menus:
   main:
     - identifier: blogs
-      name: Projects
-      title: My Projects
+      name: R Projects
+      title: My R Projects
       url: /blogs
       weight: 1
     
@@ -26,7 +26,7 @@ Menus:
       url: /gallery
       weight: 2
 
-    #Dropdown menu
+    #Dropdown menu:
     # - identifier: dropdown
     #   title: Example dropdown menu
     #   name: Dropdown
@@ -48,8 +48,7 @@ params:
   title: "Jian Shun's Profile"
   description: A collection of the past and present
   # staticPath: ""  # The path to serve the static files from
-  favicon: "/fav-mine.png"
-
+  favicon: "/jian.png"
   # Whether to serve bootstrap css and js files from CDN or not. Can be set to true, "css" or "js" to choose between
   # serving both, only the css, or only the js files through the CDN. Any other value will make so that CDN is not used.
   # Note the lack of "" in true, it should be of boolean type.
@@ -107,7 +106,7 @@ params:
     button:
       enable: true
       name: "Resume"
-      url: /(4 Sep 2022) UK Version Resume.pdf
+      url: /Resume.pdf
       download: true 
     socialLinks:
       fontAwesomeIcons:
@@ -284,55 +283,59 @@ params:
      #   content: Contributed to a open source project.
       #  url: https://example.com
 
-  # projects
-  #projects:
-    #enable: true
+#  projects
+  projects:
+    enable: true
     # title: "Custom Name"
-    #items:
-     # - title: Hugo Profile
-      #  content: A highly customizable and mobile first Hugo template for personal portfolio and blog.
-      #  image: /images/projects/profile.png
-      #  featured:
-       #   name: Demo
-        #  link: https://hugo-profile.netlify.app
-        # badges:
-        #   - "Hugo"
-        #   - "Bootstrap"
-        #   - "Javascript"
-       # links:
-        #  - icon: fa fa-envelope
-        #    url: mailto:?subject=Hugo%20Profile%20Template&body=Check%20it%20out:%20https%3a%2f%2fhugo-profile.netlify.app%2fblog%2fmarkdown-syntax%2f
-        #  - icon: fab fa-github
-        #    url: https://github.com/gurusabarish/hugo-profile
-        #  - icon: fab fa-twitter
-        #    url: https://twitter.com/intent/tweet?text=Check+it+out:&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile
+    items:
+      - title: Volatility Forecasting for Bitcoin
+        content: The objective of this paper is to examine whether asymmetric (leverage) effects common in many asset classes are applicable in forecasting Bitcoin volatility, as well as to inspect the forecasting power of the models across various forecasting horizons.
+        image: /images/projects/volatility.png
+        featured:
+          name: Paper
+          link: /Bitcoin Volatility Forecasting.pdf
+        badges:
+          - "Economic Forecasting"
+          - "Time Series"
+          - "GARCH model"
+          - "STATA"
+        links:
+          - icon: fa fa-envelope
+            url: mailto:?subject=Hugo%20Profile%20Template&body=Check%20it%20out:%20https%3a%2f%2fhugo-profile.netlify.app%2fblog%2fmarkdown-syntax%2f
+          - icon: fab fa-github
+            url: https://github.com/gurusabarish/hugo-profile
+          - icon: fab fa-twitter
+            url: https://twitter.com/intent/tweet?text=Check+it+out:&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile
 
-    #  - title: Image Converter
-     #   content: A web app to convert image to pdf, png to jpg, png to jpg and png to webp without database using django.
-      #  image: /images/projects/converter.jpg
-       # featured:
-        #  name: Demo
-         # link: https://django-converter.herokuapp.com
-        # badges:
-        #   - "Django"
-        #   - "Bootstrap"
-      #  links:
-       #   - icon: fab fa-github
-        #    url: https://github.com/gurusabarish/converter
+      - title: Bankruptcy Forecasting
+        content: Company bankruptcy has been a popular forecasting object for researchers to predict on. The likelihood of a firm becoming insolvent would be important for retail, institutional investors and venture capitalists who are considering companies to inject capital and investment into. In the context of developing countries, forming accurate judgements about firm bankruptcy is especially crucial for the public sector, where government expenditure may be tight. As such,  our paper seeks to explore company bankruptcy prediction; spottin a company that is on the verge of bankruptcy would create lower investor risks and create growth opportunities.
+        image: /images/projects/bankruptcy.jpeg
+        featured:
+          name: Paper
+          link: /Bankruptcy Forecasting.pdf
+        badges:
+          - "Machine Learning"
+          - "Boosting"
+          - "R"
+        links:
+          - icon: fab fa-github
+            url: https://github.com/gurusabarish/converter
 
-    #  - title: Hugo Profile V2
-     #   content: A clean and simple Hugo template for personal portfolio and blog.
-      #  image: /images/projects/profile2.jpg
-       # featured:
-        #  name: Demo V2
-         # link: https://hugo-profile-2.netlify.app
-        # badges:
-        #   - "Hugo"
-        #   - "Bootstrap"
-        #   - "Javascript"
-      #  links:
-       #   - icon: fab fa-github
-        #    url: https://github.com/gurusabarish/HugoProfileV2
+      - title: The Romantic Self, Film Noir and Science Fiction in Blade Runner
+        content: In this essay, I explore the classic Blade Runner's philosophy, positing that the romantic self lies at the heart of Blade Runner’s film noir, first born through the film’s dystopia, then evinced by the juxtaposition of differing selfhoods through character development, and finally immortalised in the dramatic confrontation between Batty and Deckard.
+        image: /images/projects/blade.jpeg
+        featured:
+          name: Essay
+          link: /Blade Runner.pdf
+        badges:
+          - "Philosophy"
+          - "Existentialism"
+          - "Film"
+        links:
+          - icon: fab fa-github
+            url: https://github.com/gurusabarish/converter
+
+
 
   #Contact
   contact:
