@@ -167,6 +167,9 @@ params:
             - Used conditional logit regression, spatial regression and mediation analysis via programming software STATA and R
           - Partnered a small foreign bank to increase its efficiency of debt collection
             - Performed data extraction and cleaning, followed by natural language processing (NLP) analysis and data visualisation using R
+          - Conducted field research spanning 156 interviews with taxi drivers
+            - Data obtained was eventually used in a Behavioural Economics paper to derive support for the reference-dependent preferences theory over the neoclassical labour supply model and to identify important managerial implications
+          - Copy-edited 5 academic papers; these were eventually published in leading academic journals such as Proceedings of the National Academy of Sciences, Marketing Science, and Management Science
 
       - job: "Intern"
         company: "Monetary Authority of Singapore"
@@ -179,11 +182,13 @@ params:
           enable: true
           content: This was my first internship ever!
         content: |
-          I interned at the Monetary Authority of Singapore (MAS), the central bank within Singapore, CA.
+          I interned at the Monetary Authority of Singapore (MAS), the central bank within Singapore.
 
           - Proposed the inception of a novel special purpose reinsurance vehicle after executing jurisdictional scans across selected countries worldwide and brainstorming regulatory mechanisms
-          - Analysed driving forces behind trends within the insurance industry to identify patterns on both sector and company levels and to assess the risk and financial health of each insurer within the nation
-    
+          - Analysed driving forces behind industry trends, leveraging data of 107 insurers, to identify patterns on both sector and company levels within the insurance industry
+            - Findings were presented to senior management at a department meeting in a bid to assess the risk and financial health of each insurer within Singapore
+          - Extracted overarching themes found in qualitative responses, of 19 life insurance companies, to a parallel run survey comprising 20 unique questions
+            - Results obtained could allow the central bank to more effectively understand challenges faced by life insurers and thereby redesign its approach when working with them
 
       - job: "Photography and Photo Editing"
         company: "Recreational Photography"
@@ -200,6 +205,7 @@ params:
           I have always been an avid explorer who enjoyed documenting my escapades around the globe. After I purchased my first DSLR camera, there was no turning back
 
           - Dabbled in landscape photography and astrophotography
+          - Familiar with techniques and terminologies used within photography
           - Learnt various photo-editing tools such as Photoshop and Lightroom
 
 
@@ -284,7 +290,7 @@ params:
 #  projects
   projects:
     enable: true
-    #  title: "A collection of old works"
+      # title: Past works
     items:
       - title: Volatility Forecasting for Bitcoin
         content: The objective of this paper is to examine whether asymmetric (leverage) effects common in many asset classes are applicable in forecasting Bitcoin volatility, as well as to inspect the forecasting power of the models across various forecasting horizons.
