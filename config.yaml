@@ -100,7 +100,7 @@ params:
     enable: true
     intro: "This is the story of "
     title: "Jian Shun"
-    subtitle: "I hope you enjoy your stay"
+    subtitle: "Please enjoy your stay!"
     content: "All models are wrong, but some are useful - George E.P. Box"
     image: /images/ProfileMe.jpg
     button:
