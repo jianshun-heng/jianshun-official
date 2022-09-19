@@ -55,8 +55,6 @@ library(openintro)
 
 # Brexit plot
 
-Using your data manipulation and visualisation skills, please use the Brexit results dataframe (the same dataset you used in the pre-programme assignement) and produce the following plot. Use the correct colour for each party; google "UK Political Party Web Colours" and find the appropriate hex code for colours, not the default colours that R gives you.
-
 ```{r brexit_challenge, echo=FALSE, out.width="100%"}
 #load the data into R
 brexit_results <- read_csv("https://raw.githubusercontent.com/kostis-christodoulou/am01/master/data/brexit_results.csv")
@@ -96,6 +94,6 @@ ggplot(data = brexit_results_plot_df, aes(x = Party_share, y = leave_share, colo
 
 ```
 
-[**NOTE:**]{.underline}
+[**Analysis:**]{.underline}
 
 The plot shows several interesting patterns. Generalizing conclusions should made cautiously which is why especially the relationship of the parliament constituencies' share of votes for the labour and/or conservative party and the corresponding leave share votes should not be over interpreted. However, the stronger trends for the Liberal Democrats as well as the Independent Party may show some interesting tendencies. While parliament constituencies in which the vote share for the Liberal Democrats was relatively low showed above 50% vote shares for Brexit, this vote share quickly depletes as the share of Liberal Democrats affiliation increases. An inverse relation with stronger magnitude is to be observed for the UKIP. In underrepresented parliament constituencies the vote share to leave the EU was relatively low but strongly increases as the affiliation to the UKIP grows. At around 20% representation of the UKIP in the parliament constituencies the vote shares were up to 75%. This finding should not come as a surprise, as the main campaign positions of the UKIP was to be independent of the EU whereas the Liberal Democrats campaigned to stay.

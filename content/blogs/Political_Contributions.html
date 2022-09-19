@@ -1,6 +1,6 @@
 ---
 author: Jian Shun
-date: "2022-09-14"
+date: "2022-09-19"
 description: ""
 draft: false
 #github_link: https://github.com/gurusabarish/hugo-profile
@@ -24,11 +24,11 @@ output:
 
 
 
-<div id="challenge-2-2016-california-contributors-plots" class="section level1">
-<h1>Challenge 2: 2016 California Contributors plots</h1>
-<p>To get this plot, you must join two dataframes; the one you have with all contributions, and data that can translate zipcodes to cities. You can find a file with all US zipcodes, e.g., here <a href="http://www.uszipcodelist.com/download.html" class="uri">http://www.uszipcodelist.com/download.html</a>.</p>
-<p>The easiest way would be to create two plots and then place one next to each other. For this, you will need the <code>patchwork</code> package. <a href="https://cran.r-project.org/web/packages/patchwork/index.html" class="uri">https://cran.r-project.org/web/packages/patchwork/index.html</a></p>
-<p>While this is ok, what if one asked you to create the same plot for the top 10 candidates and not just the top two? The most challenging part is how to reorder within categories, and for this you will find Julia Silge’s post on <a href="https://juliasilge.com/blog/reorder-within/">REORDERING AND FACETTING FOR GGPLOT2</a> useful.</p>
+<div id="california-contributors-plots" class="section level1">
+<h1>California Contributors plots</h1>
+<p>In this exercise, I plot the amounts raised in terms of political contributions by the top 10 candidates within their respective top 10 cities in California. The data used was from the year 2016.</p>
+<div id="join-dataframes" class="section level2">
+<h2>Join dataframes</h2>
 <pre class="r"><code># Make sure you use vroom() as it is significantly faster than read.csv()
 # Load datasets
 CA_contributors_2016 &lt;- vroom::vroom(here::here(&quot;data&quot;,&quot;CA_contributors_2016.csv&quot;))
@@ -65,9 +65,11 @@ glimpse(CA_contributors_2016)</code></pre>
 <pre class="r"><code># Join datasets (note that zip types are different across both datasets)
 # Therefore we change them to be the same so that the datasets can be joined
 CA_contributors_2016$zip&lt;-as.character(CA_contributors_2016$zip)
-df &lt;- left_join(CA_contributors_2016, zipcodes, &quot;zip&quot;)
-
-# Summarise total contributions raised by the top 10 candidates across every city
+df &lt;- left_join(CA_contributors_2016, zipcodes, &quot;zip&quot;)</code></pre>
+</div>
+<div id="create-summary-statistics" class="section level2">
+<h2>Create summary statistics</h2>
+<pre class="r"><code># Summarise total contributions raised by the top 10 candidates across every city
 top_10_cand_overall &lt;- df %&gt;% 
   group_by(cand_nm) %&gt;%
   summarize(total = sum(contb_receipt_amt)) %&gt;%
@@ -87,9 +89,11 @@ top_10_cities_per_cand &lt;- long_form_top10_cand_all_cities %&gt;%
   top_n(10, total_contrib) %&gt;% 
   ungroup() %&gt;%
   mutate(cand_nm = as.factor(cand_nm),
-         primary_city = tidytext::reorder_within(primary_city, total_contrib, cand_nm)) 
-
-# Plot faceted plots for each of the top 10 candidates across their respective top 10 cities
+         primary_city = tidytext::reorder_within(primary_city, total_contrib, cand_nm)) </code></pre>
+</div>
+<div id="plot-political-contributions-raised-by-top-10-candidates-in-top-10-cities" class="section level2">
+<h2>Plot political contributions raised by top 10 candidates in top 10 cities</h2>
+<pre class="r"><code># Plot faceted plots for each of the top 10 candidates across their respective top 10 cities
 ggplot(top_10_cities_per_cand , aes(total_contrib, primary_city))+
   geom_col(aes(fill = cand_nm), show.legend = FALSE) +
   facet_wrap(~ cand_nm, ncol = 2, scales = &quot;free&quot;) +
@@ -101,5 +105,6 @@ ggplot(top_10_cities_per_cand , aes(total_contrib, primary_city))+
           strip.background = element_rect(fill=&quot;lightblue&quot;, colour=&quot;black&quot;, size=1))+
   scale_x_continuous(labels = ~ format(.x, scientific = FALSE),
                      sec.axis = sec_axis(~ . , name = &quot;Candidates&quot;, breaks = NULL, labels = NULL))</code></pre>
-<p><img src="/blogs/Political_Contributions_files/figure-html/load_CA_data-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/Political_Contributions_files/figure-html/plot%20data-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
 </div>

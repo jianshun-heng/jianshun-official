@@ -1,6 +1,6 @@
 ---
 author: Jian Shun
-date: "2022-09-14"
+date: "2022-09-19"
 description: ""
 draft: false
 #github_link: https://github.com/gurusabarish/hugo-profile
@@ -24,11 +24,9 @@ output:
 
 
 
-<div id="rents-in-san-francsisco-2000-2018" class="section level1">
-<h1>Rents in San Francsisco 2000-2018</h1>
-<p><a href="https://www.katepennington.org/data">Kate Pennington</a> created a panel of historic Craigslist rents by scraping posts archived by the Wayback Machine. You can read more about her work here</p>
-<p><a href="https://matrix.berkeley.edu/research-article/kate-pennington-on-gentrification-and-displacement-in-san-francisco/">What impact does new housing have on rents, displacement, and gentrification in the surrounding neighborhood? Read our interview with economist Kate Pennington about her article, “Does Building New Housing Cause Displacement?:The Supply and Demand Effects of Construction in San Francisco.”</a></p>
-<p>In our case, we have a clean(ish) dataset with about 200K rows tht corresponf to Craigslist listings for renting properties in the greater SF area. The data dictionary is as follows</p>
+<div id="rents-in-san-francisco-2000-2018" class="section level1">
+<h1>Rents in San Francisco 2000-2018</h1>
+<p>In this case, we have a clean(ish) dataset with about 200K rows that corresponds to Craigslist listings for renting properties in the greater SF area. The data dictionary is as follows</p>
 <table>
 <thead>
 <tr class="header">
@@ -129,7 +127,8 @@ output:
 <pre class="r"><code># download directly off tidytuesdaygithub repo
 
 rent &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/rent.csv&#39;)</code></pre>
-<p>What are the variable types? Do they all correspond to what they really are? Which variables have most missing values?</p>
+<div id="cursory-examination-of-data" class="section level2">
+<h2>Cursory examination of data</h2>
 <p>The variable types are either character or double. On cursory glance, the variable types all tally. We sieved out all observations that had complete information to better check if the types correspond. From observation, the one variable type that seems not optimal is “date”, which is input as a “dbl”. This could (not should) be changed to the “date” type for heightened accuracy. The “chr” variables are all descriptors or names while the “dbl” variables are all numeric values; this checks out. The interesting thing to note is that the variable “address” is registered as “chr” type despite it being numeric; this is logical since the address is essentially a descriptor that serves as a categorical variable. The numeric aspect is not relevant for analysis. The top 5 variables that have the most missing values are “descr” (197542), “address” (196888), “lon” (196484), “lat” (193145) and “details” (192780).</p>
 <pre class="r"><code>glimpse(rent)</code></pre>
 <pre><code>## Rows: 200,796
@@ -492,8 +491,9 @@ rent %&gt;%
 ## 16 price            0
 ## 17 room_in_apt      0</code></pre>
 <pre class="r"><code># Check which variables have the most missing values</code></pre>
-<p>Make a plot that shows the top 20 cities in terms of % of classifieds between 2000-2018. You need to calculate the number of listings by city, and then convert that number to a %.</p>
-<p>The final graph should look like this<img src="images/top_cities.png" /></p>
+</div>
+<div id="plot-top-20-cities-in-terms-of-percent-of-total-listings-between-2000-and-2018" class="section level2">
+<h2>Plot top 20 cities in terms of percent of total listings between 2000 and 2018</h2>
 <pre class="r"><code># Creating dataset with top 20 cities
 top_cities &lt;- rent %&gt;% 
   group_by(city) %&gt;% 
@@ -508,8 +508,9 @@ ggplot(data = top_cities, mapping = aes(x = frequency, y = fct_reorder(city, fre
   labs(title = &quot;Top 20 cities in terms of % of classifieds from 2000-2018&quot;, x = &quot;Frequency (%)&quot;, y = &quot;City&quot;) +
   theme(axis.title = element_text(size = 12), axis.text = element_text(size = 10))</code></pre>
 <p><img src="/blogs/Rents_SF_files/figure-html/top_cities-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>Make a plot that shows the evolution of median prices in San Francisco for 0, 1, 2, and 3 bedrooms listings. The final graph should look like this</p>
-<p><img src="images/sf_rentals.png" /></p>
+</div>
+<div id="plot-the-evolution-of-median-prices-of-0-1-2-and-3-bedroom-flats-within-san-francisco" class="section level2">
+<h2>Plot the evolution of median prices of 0, 1, 2 and 3 bedroom-flats within San Francisco</h2>
 <pre class="r"><code># Created a table for the median price of flats with 3 or fewer bedrooms
 median_price_beds &lt;- rent %&gt;% 
   filter(beds &lt;= 3 &amp; city == &quot;san francisco&quot;) %&gt;% 
@@ -549,6 +550,9 @@ ggplot(data = median_price_beds, mapping = aes(year, median_price, colour = fact
         legend.text = element_text(size=8),
         legend.position = &quot;bottom&quot;) #change legend text font size</code></pre>
 <p><img src="/blogs/Rents_SF_files/figure-html/sf_median_prices-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-the-median-price-per-city-per-year-for-flats-in-the-top-12-cities-in-terms-of-percent-listings-from-2000-to-2018" class="section level2">
+<h2>Plot the median price per city per year for flats in the top 12 cities (in terms of percent listings) from 2000 to 2018</h2>
 <pre class="r"><code># We used the description provided rather than what was shown in the plots; i.e. we took data from all number of bedrooms rather than just 1-bedroom like shown in the plots.
 
 # Extract city names for top 12 cities into new dataframe (took a subset from an earlier section)
@@ -578,13 +582,14 @@ ggplot(data = median_top12_cities, mapping = aes(year, median_price, colour = fa
         legend.text = element_text(size=8), #change legend text font size
         legend.position = &quot;right&quot;)</code></pre>
 <p><img src="/blogs/Rents_SF_files/figure-html/spirit_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>What can you infer from these plots? Don’t just explain what’s in the graph, but speculate or tell a short story (1-2 paragraphs max).</p>
-<blockquote>
-<p>TYPE YOUR ANSWER AFTER (AND OUTSIDE!) THIS BLOCKQUOTE.</p>
-</blockquote>
-<p>From the first plot, we see that the median price of all flats with 3 or fewer bedrooms in San Francisco rose over the 15 years. It also seemed that the more bedrooms a flat had, the more severe the increase in price across years; 1-bed flats increased by about 100% of their original price after 15 years whereas 3-bed flats increased by 150%. We infer that a process of gentrification is at work here in the San Francisco region; wealthier individuals not only prefer, but also have the means to rent apartments with more luxurious amenities, e.g. more bedrooms. These individuals may engage in an auction process to out-bid their competitors to move into such apartments and thus prices rise more aggressively. One could also imagine that these apartments are within neighbourhoods with similar apartments; a process of gentrification then occurs since more wealthier individuals are attracted to these areas, thus fueling another cycle of competition and deepening the upward price spiral. While this cannot be seen from the plots, one could conduct spatial analysis/regression to test this narrative.</p>
+</div>
+<div id="inference-and-analysis" class="section level2">
+<h2>Inference and Analysis</h2>
+<p>We see that the median price of all flats with 3 or fewer bedrooms in San Francisco rose over the 15 years. It also seemed that the more bedrooms a flat had, the more severe the increase in price across years; 1-bed flats increased by about 100% of their original price after 15 years whereas 3-bed flats increased by 150%. We infer that a process of gentrification is at work here in the San Francisco region; wealthier individuals not only prefer, but also have the means to rent apartments with more luxurious amenities, e.g. more bedrooms. These individuals may engage in an auction process to out-bid their competitors to move into such apartments and thus prices rise more aggressively. One could also imagine that these apartments are within neighbourhoods with similar apartments; a process of gentrification then occurs since more wealthier individuals are attracted to these areas, thus fueling another cycle of competition and deepening the upward price spiral. While this cannot be seen from the plots, one could conduct spatial analysis/regression to test this narrative.</p>
 <p>When the plots were faceted by cities, we see that the upward trend in prices still holds for all top 12 cities. However, the extent of overall increase in price within each city from 2000 to 2018 differs widely, with cities that experienced the highest price change suffering an almost 300% jump in price (Palo Alto) while other cities only saw a 100% increase in price. This suggests that some areas were more preferred than the others, perhaps due to better regional amenities maybe because they belonged to a more matured estate; the heightened demand for those areas caused an upward pressure on prices.</p>
-<p>You have to create a graph that calculates the cumulative % change for 0-, 1-1, and 2-bed flats between 2000 and 2018 for the top twelve cities in Bay Area, by number of ads that appeared in Craigslist. Your final graph should look like this</p>
+</div>
+<div id="plot-cumulative-percent-change-of-median-prices-of-0-1-and-2-bedroom-flats-for-the-top-12-cities-in-bay-area" class="section level2">
+<h2>Plot cumulative percent change of median prices of 0, 1 and 2 bedroom flats for the top 12 cities in Bay Area</h2>
 <pre class="r"><code># Summarise popularity of cities in terms of percent of ads that appeared
 # Find the top 12 cities (We reused code from the section above since they are linked)
 top_12_cities &lt;- rent %&gt;% 
@@ -640,4 +645,5 @@ ggplot(data = cumulative_percent_change, mapping = aes(year, percent_change, col
   scale_x_continuous(sec.axis = sec_axis(~ . , name = &quot;Cities&quot;, breaks = NULL, labels = NULL)) +
   scale_y_continuous(sec.axis = sec_axis(~ . , name = &quot;Beds&quot;, breaks = NULL, labels = NULL))</code></pre>
 <p><img src="/blogs/Rents_SF_files/figure-html/percent_change_top_12-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
 </div>

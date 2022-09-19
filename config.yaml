@@ -98,8 +98,8 @@ params:
   # Hero
   hero:
     enable: true
-    intro: "Welcome to "
-    title: "Jian Shun's world"
+    intro: "This is the story of "
+    title: "Jian Shun"
     subtitle: "I hope you enjoy your stay"
     content: "All models are wrong, but some are useful - George E.P. Box"
     image: /images/ProfileMe.jpg
@@ -119,8 +119,8 @@ params:
         - icon: fab fa-linkedin
           url: https://www.linkedin.com/in/heng-jian-shun/         
       customIcons:
-        - icon: /fav.png
-          url: "https://example.com"
+        # - icon: /fav.png
+        #   url: "https://example.com"
 
   # About
   about:
@@ -155,11 +155,11 @@ params:
         date: "Jun 2021 - Jun 2022"
         featuredLink:
           enable: true
-          name: "View the project"
-          url: "https://example.com"
+          name: "View the initiative"
+          url: "https://bizfaculty.nus.edu.sg/spire/"
         info:
           enable: true
-          content: This was the time that I decided to pursue analytics
+          content: This was around the time that I decided to pursue analytics
         content: |
           I was a researcher at the National University of Singapore (NUS) working on the [NUS SPIRE Project](https://bizfaculty.nus.edu.sg/spire/), an inter-discplinary study spanning across the Economics, Marketing and Sociology fields.
 
@@ -173,7 +173,7 @@ params:
         companyUrl: "https://www.mas.gov.sg/"
         date: "Sep 2020 - Dec 2021"
         featuredLink:
-          enable: true
+          enable: false
           url: "https://example.com"
         info:
           enable: true
@@ -187,7 +187,7 @@ params:
 
       - job: "Photography and Photo Editing"
         company: "Recreational Photography"
-        companyUrl: "https://example.com"
+        # companyUrl: "https://example.com"
         date: "Jan 2020 - Present"
         info:
           enable: true
@@ -197,7 +197,7 @@ params:
           name: "Gallery"
           url: "https://jianshun-official.netlify.app/gallery/"
         content: |
-          I have always been an avid explorer who enjoyed documenting my escapades around the globe. After I purchased my first DSLR camera, there was no going back
+          I have always been an avid explorer who enjoyed documenting my escapades around the globe. After I purchased my first DSLR camera, there was no turning back
 
           - Dabbled in landscape photography and astrophotography
           - Learnt various photo-editing tools such as Photoshop and Lightroom
@@ -208,7 +208,7 @@ params:
         companyUrl: "https://www.mindef.gov.sg/web/portal/rsaf/home/"
         date: "June 2015 - Dec 2016"
         featuredLink:
-          enable: true
+          enable: false
           url: "https://example.com"
         content: |
           I served in the Air Force for my country's national service over the course of 2 years
@@ -233,9 +233,7 @@ params:
         date: "2022 - present"
         #GPA: "3.8 out of 5.0"
         content: |-
-          Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
+          Currently an aspiring business analyst eager to change the world
       - title: "Bachelor of Social Sciences with Honours (Economics)"
         school:
           name: "National University of Singapore (NUS)"
@@ -271,13 +269,13 @@ params:
     items:
       - title: Captain of Junior College Tchoukball team
         content: Led team to win league 2 years in a row. 
-        url: https://example.com
+        url: https://www.tchoukball.org.uk/how-to-play/
       - title: Coach and Manager (Tchoukball)
         content: Held coach and team manager roles in 8 different tchoukball teams over 6 years; these teams achieved various podium finishes in various annual leagues
       - title: Simulations modeller
         content: Spent 2 years in an external university program studying simulations modeling skills such as System Dynamics and Agent Based modelling; software such as Vensim and Java-based AnyLogic were used.
-      #  url: "https://github.com/gurusabarish/hugo-profile"
-      - title: Self-taught pianisst
+        url: "https://www.anylogic.com/"
+      - title: Self-taught pianist
         content: Learnt the piano over the course of 12 years. Transitioned from classical music to movie soundtrack epics and pop pieces 
     #  - title: Google Summer of Code
      #   content: Contributed to a open source project.
@@ -286,7 +284,7 @@ params:
 #  projects
   projects:
     enable: true
-    # title: "Custom Name"
+    #  title: "A collection of old works"
     items:
       - title: Volatility Forecasting for Bitcoin
         content: The objective of this paper is to examine whether asymmetric (leverage) effects common in many asset classes are applicable in forecasting Bitcoin volatility, as well as to inspect the forecasting power of the models across various forecasting horizons.
@@ -300,29 +298,30 @@ params:
           - "GARCH model"
           - "STATA"
         links:
-          - icon: fa fa-envelope
-            url: mailto:?subject=Hugo%20Profile%20Template&body=Check%20it%20out:%20https%3a%2f%2fhugo-profile.netlify.app%2fblog%2fmarkdown-syntax%2f
-          - icon: fab fa-github
-            url: https://github.com/gurusabarish/hugo-profile
-          - icon: fab fa-twitter
-            url: https://twitter.com/intent/tweet?text=Check+it+out:&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile
+          # - icon: fa fa-envelope
+          #   url: mailto:?subject=Hugo%20Profile%20Template&body=Check%20it%20out:%20https%3a%2f%2fhugo-profile.netlify.app%2fblog%2fmarkdown-syntax%2f
+          # - icon: fab fa-github
+          #   url: https://github.com/gurusabarish/hugo-profile
+          # - icon: fab fa-twitter
+          #   url: https://twitter.com/intent/tweet?text=Check+it+out:&url=https%3A%2F%2Fgithub.com%2Fgurusabarish%2Fhugo-profile
 
       - title: Bankruptcy Forecasting
-        content: Company bankruptcy has been a popular forecasting object for researchers to predict on. The likelihood of a firm becoming insolvent would be important for retail, institutional investors and venture capitalists who are considering companies to inject capital and investment into. In the context of developing countries, forming accurate judgements about firm bankruptcy is especially crucial for the public sector, where government expenditure may be tight. As such,  our paper seeks to explore company bankruptcy prediction; spottin a company that is on the verge of bankruptcy would create lower investor risks and create growth opportunities.
+        content: This paper seeks to explore company bankruptcy prediction; spotting a company that is on the verge of bankruptcy would create lower investor risks and create growth opportunities.
         image: /images/projects/bankruptcy.jpeg
         featured:
           name: Paper
           link: /Bankruptcy Forecasting.pdf
         badges:
           - "Machine Learning"
+          - "Prediction"
           - "Boosting"
           - "R"
-        links:
-          - icon: fab fa-github
-            url: https://github.com/gurusabarish/converter
+        # links:
+        #   - icon: fab fa-github
+        #     url: https://github.com/gurusabarish/converter
 
       - title: The Romantic Self, Film Noir and Science Fiction in Blade Runner
-        content: In this essay, I explore the classic Blade Runner's philosophy, positing that the romantic self lies at the heart of Blade Runner’s film noir, first born through the film’s dystopia, then evinced by the juxtaposition of differing selfhoods through character development, and finally immortalised in the dramatic confrontation between Batty and Deckard.
+        content: In this essay, I explore the philosophy behind the classic film Blade Runner, positing that the romantic self lies at the heart of Blade Runner’s film noir, first born through the film’s dystopia, then evinced by the juxtaposition of differing selfhoods through character development, and finally immortalised in the dramatic confrontation between Batty and Deckard.
         image: /images/projects/blade.jpeg
         featured:
           name: Essay
@@ -331,9 +330,9 @@ params:
           - "Philosophy"
           - "Existentialism"
           - "Film"
-        links:
-          - icon: fab fa-github
-            url: https://github.com/gurusabarish/converter
+        # links:
+        #   - icon: fab fa-github
+        #     url: https://github.com/gurusabarish/converter
 
 
 

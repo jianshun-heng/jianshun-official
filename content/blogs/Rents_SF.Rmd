@@ -50,13 +50,9 @@ library(vroom)
 library(tidyquant)
 ```
 
-# Rents in San Francsisco 2000-2018
+# Rents in San Francisco 2000-2018
 
-[Kate Pennington](https://www.katepennington.org/data) created a panel of historic Craigslist rents by scraping posts archived by the Wayback Machine. You can read more about her work here
-
-[What impact does new housing have on rents, displacement, and gentrification in the surrounding neighborhood? Read our interview with economist Kate Pennington about her article, "Does Building New Housing Cause Displacement?:The Supply and Demand Effects of Construction in San Francisco."](https://matrix.berkeley.edu/research-article/kate-pennington-on-gentrification-and-displacement-in-san-francisco/)
-
-In our case, we have a clean(ish) dataset with about 200K rows tht corresponf to Craigslist listings for renting properties in the greater SF area. The data dictionary is as follows
+In this case, we have a clean(ish) dataset with about 200K rows that corresponds to Craigslist listings for renting properties in the greater SF area. The data dictionary is as follows
 
 | variable    | class     | description           |
 |-------------|-----------|-----------------------|
@@ -87,7 +83,7 @@ rent <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidyt
 
 ```
 
-What are the variable types? Do they all correspond to what they really are? Which variables have most missing values?
+## Cursory examination of  data
 
 The variable types are either character or double. On cursory glance, the variable types all tally. We sieved out all observations that had complete information to better check if the types correspond. From observation, the one variable type that seems not optimal is "date", which is input as a "dbl". This could (not should) be changed to the "date" type for heightened accuracy. The "chr" variables are all descriptors or names while the "dbl" variables are all numeric values; this checks out. The interesting thing to note is that the variable "address" is registered as "chr" type despite it being numeric; this is logical since the address is essentially a descriptor that serves as a categorical variable. The numeric aspect is not relevant for analysis. The top 5 variables that have the most missing values are "descr" (197542), "address" (196888), "lon" (196484), "lat" (193145) and "details" (192780).
 
@@ -108,9 +104,7 @@ rent %>%
 
 ```
 
-Make a plot that shows the top 20 cities in terms of % of classifieds between 2000-2018. You need to calculate the number of listings by city, and then convert that number to a %.
-
-The final graph should look like this![](images/top_cities.png)
+## Plot top 20 cities in terms of percent of total listings between 2000 and 2018
 
 ```{r top_cities}
 
@@ -129,9 +123,7 @@ ggplot(data = top_cities, mapping = aes(x = frequency, y = fct_reorder(city, fre
   theme(axis.title = element_text(size = 12), axis.text = element_text(size = 10))
 ```
 
-Make a plot that shows the evolution of median prices in San Francisco for 0, 1, 2, and 3 bedrooms listings. The final graph should look like this
-
-![](images/sf_rentals.png)
+## Plot the evolution of median prices of 0, 1, 2 and 3 bedroom-flats within San Francisco
 
 ```{r sf_median_prices}
 
@@ -161,6 +153,7 @@ ggplot(data = median_price_beds, mapping = aes(year, median_price, colour = fact
 
 ```
 
+## Plot the median price per city per year for flats in the top 12 cities (in terms of percent listings) from 2000 to 2018
 
 ```{r spirit_plot}
 
@@ -196,20 +189,13 @@ ggplot(data = median_top12_cities, mapping = aes(year, median_price, colour = fa
 
 ```
 
-What can you infer from these plots? Don't just explain what's in the graph, but speculate or tell a short story (1-2 paragraphs max).
+## Inference and Analysis
 
-> TYPE YOUR ANSWER AFTER (AND OUTSIDE!) THIS BLOCKQUOTE.
-
-From the first plot, we see that the median price of all flats with 3 or fewer bedrooms in San Francisco rose over the 15 years. It also seemed that the more bedrooms a flat had, the more severe the increase in price across years; 1-bed flats increased by about 100% of their original price after 15 years whereas 3-bed flats increased by 150%. We infer that a process of gentrification is at work here in the San Francisco region; wealthier individuals not only prefer, but also have the means to rent apartments with more luxurious amenities, e.g. more bedrooms. These individuals may engage in an auction process to out-bid their competitors to move into such apartments and thus prices rise more aggressively. One could also imagine that these apartments are within neighbourhoods with similar apartments; a process of gentrification then occurs since more wealthier individuals are attracted to these areas, thus fueling another cycle of competition and deepening the upward price spiral. While this cannot be seen from the plots, one could conduct spatial analysis/regression to test this narrative.
+We see that the median price of all flats with 3 or fewer bedrooms in San Francisco rose over the 15 years. It also seemed that the more bedrooms a flat had, the more severe the increase in price across years; 1-bed flats increased by about 100% of their original price after 15 years whereas 3-bed flats increased by 150%. We infer that a process of gentrification is at work here in the San Francisco region; wealthier individuals not only prefer, but also have the means to rent apartments with more luxurious amenities, e.g. more bedrooms. These individuals may engage in an auction process to out-bid their competitors to move into such apartments and thus prices rise more aggressively. One could also imagine that these apartments are within neighbourhoods with similar apartments; a process of gentrification then occurs since more wealthier individuals are attracted to these areas, thus fueling another cycle of competition and deepening the upward price spiral. While this cannot be seen from the plots, one could conduct spatial analysis/regression to test this narrative.
 
 When the plots were faceted by cities, we see that the upward trend in prices still holds for all top 12 cities. However, the extent of overall increase in price within each city from 2000 to 2018 differs widely, with cities that experienced the highest price change suffering an almost 300% jump in price (Palo Alto) while other cities only saw a 100% increase in price. This suggests that some areas were more preferred than the others, perhaps due to better regional amenities maybe because they belonged to a more matured estate; the heightened demand for those areas caused an upward pressure on prices.
 
-
-
-
-
-You have to create a graph that calculates the cumulative % change for 0-, 1-1, and 2-bed flats between 2000 and 2018 for the top twelve cities in Bay Area, by number of ads that appeared in Craigslist. Your final graph should look like this
-
+## Plot cumulative percent change of median prices of 0, 1 and 2 bedroom flats for the top 12 cities in Bay Area
 
 ```{r percent_change_top_12}
 

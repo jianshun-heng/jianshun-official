@@ -1,6 +1,6 @@
 ---
 author: Jian Shun
-date: "2022-09-14"
+date: "2022-09-19"
 description: ""
 draft: false
 #github_link: https://github.com/gurusabarish/hugo-profile
@@ -11,7 +11,6 @@ tags:
 - Trend
 title: Bike sharing in London
 toc: null
-
 output:
   html_document:
     theme: flatly
@@ -20,14 +19,16 @@ output:
     toc: yes
     toc_float: yes
     code_folding: show
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 
 
-<div id="challenge-1-excess-rentals-in-tfl-bike-sharing" class="section level1">
-<h1>Challenge 1: Excess rentals in TfL bike sharing</h1>
-<p>Recall the TfL data on how many bikes were hired every single day. We
-can get the latest data by running the following</p>
+<div id="excess-rentals-in-london-tfl-bike-sharing" class="section level1">
+<h1>Excess rentals in London TfL bike sharing</h1>
+<p>Here, I use data from London’s transport hub, TfL.</p>
 <pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
 
 # Download TFL data to temporary file
@@ -50,18 +51,16 @@ bike &lt;- bike0 %&gt;%
   mutate (year = year(day),
           month = lubridate::month(day, label = TRUE),
           week = isoweek(day))</code></pre>
-<p>The second one looks at percentage changes from the expected level of
-weekly rentals. The two grey shaded rectangles correspond to Q2 (weeks
-14-26) and Q4 (weeks 40-52).</p>
-<p>For both of these graphs, you have to calculate the expected number of
-rentals per week or month between 2016-2019 and then, see how each
-week/month of 2020-2022 compares to the expected rentals. Think of the
-calculation <code>excess_rentals = actual_rentals - expected_rentals</code>.</p>
-<p>We should use the mean to calculate expected rentals. In our case, we
-wanted to smooth (by averaging) all of the data, including anomalies,
-across the years for rentals within each month/week; this gives a
-clearer picture of an “average” for each time period since the median
-statistic would automatically exclude the effects of outliers.</p>
+<p>In this example, I first use the mean to calculate expected rentals . In
+this case, I wanted to smooth (by averaging) all of the data, including
+anomalies, across the years for rentals within each month/week; this
+gives a clearer picture of an “average” for each time period since the
+median statistic would automatically exclude the effects of outliers.</p>
+<div id="plot-monthly-rental-faceted-by-year" class="section level2">
+<h2>Plot monthly rental faceted by year</h2>
+<p>I first create a mean expected rental from years 2016 to 2019 as
+reference. I then tabulate bicycle rentals from 2020 to 2022 to see how
+monthly bike rentals have changed since the onset of coronavirus.</p>
 <pre class="r"><code># Create expected monthly bike rental by averaging monthly data from 2016-2019
 expected_monthly_rental_summary &lt;- bike %&gt;% 
   filter(year &gt;= 2016 &amp; year &lt;= 2019) %&gt;% 
@@ -95,6 +94,11 @@ ggplot(monthly_full_summary) +
         axis.text.x = element_text(angle = 90),
         strip.text.x = element_text(size = 10)) </code></pre>
 <p><img src="/blogs/Bike_sharing_files/figure-html/monthly%20stats-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-weekly-rental-percent-deviation-faceted-by-year" class="section level2">
+<h2>Plot weekly rental percent deviation faceted by year</h2>
+<p>I do the same thing here, except now with weekly data measured in terms
+of percent deviation.</p>
 <pre class="r"><code># Create expected weekly bike rental by averaging weekly data from 2016-2019
 expected_weekly_rental_summary &lt;- bike %&gt;% 
   filter(year &gt;= 2016 &amp; year &lt;= 2019) %&gt;% 
@@ -134,7 +138,7 @@ ggplot(weekly_full_summary, aes(x = week)) +
         axis.text = element_text(size = 10),
         strip.text.x = element_text(size = 10))</code></pre>
 <p><img src="/blogs/Bike_sharing_files/figure-html/weekly%20stats-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p><u><strong>NOTE:</strong></u></p>
+<p><u><strong>Observation:</strong></u></p>
 <p>We see that during the beginning of coronavirus lockdown periods, we
 observed a notable reduction in bike rentals. Conversely, past the
 lifting of general coronavirus measures in mid 2021, we have seen
@@ -144,4 +148,5 @@ inclined to get out of the house and into the fresh air by cycling more
 regularly. A similar pattern can be observed for the weekly analysis of
 bike rentals; bike rentals by more than 50%, as compared to the period
 from 2016-2019, in most weeks after the lockdown measures were lifted.</p>
+</div>
 </div>

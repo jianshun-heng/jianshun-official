@@ -50,14 +50,11 @@ library(vroom)
 library(tidyquant)
 ```
 
+# California Contributors plots
 
-# Challenge 2: 2016 California Contributors plots
+In this exercise, I plot the amounts raised in terms of political contributions by the top 10 candidates within their respective top 10 cities in California. The data used was from the year 2016.
 
-To get this plot, you must join two dataframes; the one you have with all contributions, and data that can translate zipcodes to cities. You can find a file with all US zipcodes, e.g., here <http://www.uszipcodelist.com/download.html>.
-
-The easiest way would be to create two plots and then place one next to each other. For this, you will need the `patchwork` package. <https://cran.r-project.org/web/packages/patchwork/index.html>
-
-While this is ok, what if one asked you to create the same plot for the top 10 candidates and not just the top two? The most challenging part is how to reorder within categories, and for this you will find Julia Silge's post on [REORDERING AND FACETTING FOR GGPLOT2](https://juliasilge.com/blog/reorder-within/) useful.
+## Join dataframes
 
 ```{r, load_CA_data, warnings= FALSE, message=FALSE}
 # Make sure you use vroom() as it is significantly faster than read.csv()
@@ -74,7 +71,11 @@ glimpse(zipcodes)
 # Therefore we change them to be the same so that the datasets can be joined
 CA_contributors_2016$zip<-as.character(CA_contributors_2016$zip)
 df <- left_join(CA_contributors_2016, zipcodes, "zip")
+```
 
+## Create summary statistics
+
+```{r, create summary statistics}
 # Summarise total contributions raised by the top 10 candidates across every city
 top_10_cand_overall <- df %>% 
   group_by(cand_nm) %>%
@@ -97,6 +98,12 @@ top_10_cities_per_cand <- long_form_top10_cand_all_cities %>%
   mutate(cand_nm = as.factor(cand_nm),
          primary_city = tidytext::reorder_within(primary_city, total_contrib, cand_nm)) 
 
+
+```
+
+## Plot political contributions raised by top 10 candidates in top 10 cities
+
+```{r plot data}
 # Plot faceted plots for each of the top 10 candidates across their respective top 10 cities
 ggplot(top_10_cities_per_cand , aes(total_contrib, primary_city))+
   geom_col(aes(fill = cand_nm), show.legend = FALSE) +

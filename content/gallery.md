@@ -21,7 +21,6 @@ images:
 - src: /images/Gallery/Others1.jpg
 - src: /images/Gallery/Others2.jpg
 - src: /images/Gallery/Others3.jpg
-- src: /images/Gallery/Sunset1.jpg
 - src: /images/Gallery/Flower1.jpg
 - src: /images/Gallery/Flower2.jpg
 - src: /images/Gallery/Flower3.jpg
