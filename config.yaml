@@ -171,10 +171,27 @@ params:
             - Data obtained was eventually used in a Behavioural Economics paper to derive support for the reference-dependent preferences theory over the neoclassical labour supply model and to identify important managerial implications
           - Copy-edited 5 academic papers; these were eventually published in leading academic journals such as Proceedings of the National Academy of Sciences, Marketing Science, and Management Science
 
+      - job: "Intern - Rescinded due to Covid-19"
+        company: "Revenue Management Solutions"
+        companyUrl: "https://www.revenuemanage.com/en/"
+        date: "Jun 2020"
+        featuredLink:
+          enable: false
+          url: "https://example.com"
+        info:
+          enable: true
+          content: This internship was cancelled by the firm due to the unpredictability of the Covid-19 situation.
+        content: |
+          I was supposed to intern here as a Transaction segmentation analyst. However, I was told after Covid-19 was declared a pandemic that due to the uncertainty of the situation, RMS would be cancelling the internship opportunity.
+
+          - While I may have missed an opportunity to intern here as an analyst, this was essentially my first step into the world of analytics
+          - I took the opportunity to learn the Python language and read up on techniques such as Latent Dirichlet Allocation and Natural Language Processing in preparation for the internship
+          - It was also thanks to this stint that I decided to venture into Machine Learning and Predictions in my final undergraduate year; this also kickstarted my journey into analytics and contributed to my current decision to do a Masters in Business Analytics  
+      
       - job: "Intern"
         company: "Monetary Authority of Singapore"
         companyUrl: "https://www.mas.gov.sg/"
-        date: "Sep 2020 - Dec 2021"
+        date: "Jun 2019 - Aug 2019"
         featuredLink:
           enable: false
           url: "https://example.com"
