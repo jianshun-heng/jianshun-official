@@ -357,6 +357,20 @@ params:
         #   - icon: fab fa-github
         #     url: https://github.com/gurusabarish/converter
 
+      - title: The Aftermath of Greek Debt Crisis
+        content: In this project, we focus on Greece’s decade-long battle against soaring (1) unemployment and (2) weak economic growth triggered by the European sovereign debt crisis. This report provides an initial evaluation of Greece’s past and current policies and suggests alternative policies that the Greek government could adopt to resolve the problems.
+        image: /images/projects/Greece.jpeg
+        featured:
+          name: Essay
+          link: /Greece.pdf
+        badges:
+          - "Economics"
+          - "Systems Dynammic Modelling"
+          - "STATA"
+          - "SVAR"
+        # links:
+        #   - icon: fab fa-github
+        #     url: https://github.com/gurusabarish/converter
 
 
   #Contact
