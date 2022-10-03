@@ -6,10 +6,10 @@ images:
 - src: /images/Gallery/Sun1.jpg
 - src: /images/Gallery/Sun2.jpg
 - src: /images/Gallery/Sun3.jpg
-- src: /images/Gallery/Snow1.jpg
 - src: /images/Gallery/SevenSisters1.jpg
 - src: /images/Gallery/SevenSisters2.jpg
 - src: /images/Gallery/SevenSisters3.jpg
+- src: /images/Gallery/Snow1.jpg
 - src: /images/Gallery/Snow2.jpg
 - src: /images/Gallery/Snow3.jpg
 - src: /images/Gallery/Sun4.jpg
