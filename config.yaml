@@ -151,7 +151,7 @@ params:
     items:
       - job: "Project Data Lead (Data Consulting Industrial Attachment)"
         company: "Harrods (London)"
-        companyUrl: "https://www.nus.edu.sg/"
+        companyUrl: "https://www.harrods.com/en-sg/"
         date: "Mar 2023 - Jun 2023"
         featuredLink:
           enable: false
