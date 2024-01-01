@@ -302,10 +302,10 @@ params:
         school:
           name: "London Business School (LBS)"
           url: "https://www.london.edu/masters-degrees/masters-in-analytics-and-management"
-        date: "2022 - present"
+        date: "2022 - 2023"
         #GPA: "3.8 out of 5.0"
         content: |-
-          Currently an aspiring business analyst eager to change the world
+           Undertook a 3-month consulting project with SCOPEinsight, a Netherlands-based Agribusiness Intelligence firm. My team, comprising 3 other MBA students, worked with 12 different lenders from Africa, ranging from Financial Institutions to Micro-Finance Lenders and NGOs. This project saw us collaborate with SCOPEinsight's CEO and product owner and we eventually delivered a business model and market research report informing them of potential growth areas in the industry
       - title: "Bachelor of Social Sciences with Honours (Economics)"
         school:
           name: "National University of Singapore (NUS)"
