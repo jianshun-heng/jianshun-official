@@ -174,6 +174,32 @@ params:
           2 prime locations for new store openings within the next business year
           - Performed same-day data extraction (SQL) and big-data manipulation (Python and PySpark) for ad-hoc data
           requests from various arms (CRM, Sustainability, Store Leaders, etc.
+
+      - job: "Data Science Intern"
+        company: "Decathlon"
+        companyUrl: "https://www.decathlon.sg/"
+        date: "Jul 2023 - Dec 2023"
+        featuredLink:
+          enable: false
+          name: "View the initiative"
+          url: "https://bizfaculty.nus.edu.sg/spire/"
+        info:
+          enable: true
+          content: I undertook this internship to learn how data intersects with business
+        content: |
+          - Spearheaded an unprecedented country-level fraud detection and refund abuse project involving fortnightly
+          discussions with operations manager and finance team; built an automated rule-based and Isolation Forest
+          model, and launched dashboards to minimise manual man-hour refund tracking
+              - Identified 2 past known fraud cases amounting to ~$10000 during backtesting and flagged more than
+          $100000 of refunds as potential abuse from customers
+          ○ Dashboards and findings were actively used at the leading team’s board meetings to propose a reversal
+          to and an implementation of 2 major company policies
+              - Helmed a joint venture with external statutory board SportSG through geographical dashboarding and crafting
+          strategic recommendations for the Swimming department. Presented findings to SportSG’s senior management
+          - Initiated a store expansion roadmap and presented prototype dashboard to country Expansion Leader; identified
+          2 prime locations for new store openings within the next business year
+          - Performed same-day data extraction (SQL) and big-data manipulation (Python and PySpark) for ad-hoc data
+          requests from various arms (CRM, Sustainability, Store Leaders, etc.
           
       - job: "Project Data Lead (Data Consulting Industrial Attachment)"
         company: "Harrods (London)"
@@ -182,12 +208,12 @@ params:
         featuredLink:
           enable: false
           name: "View the initiative"
-          url: "https://bizfaculty.nus.edu.sg/spire/"
         info:
           enable: true
           content: This was the most enjoyable and enriching aspect of my Masters programme
         content: |
-          During my Masters' industrial attachment in London, I led an ethnically (from 6 countries) and professionally (from computer science, economics, and consulting) diverse team to work with Harrod’s Insights Analytics and Data team on a persona lifecycle analysis project. The findings were eventually presented to their senior management
+          During my Masters' industrial attachment in London, I led an ethnically (from 6 countries) and professionally (from computer science, economics, and consulting) diverse team to work with Harrod’s Insights Analytics and Data team on a persona lifecycle analysis project. The findings were eventually presented to their senior management.
+          
           - Expanded upon the existing static company-adopted persona K-medoids clustering model to allow internal
           stakeholders to determine a correct time to re-assign accurate personas to customers
           - Feature engineered early predictors of key customer personas – new customers with 4 months of data are now at
