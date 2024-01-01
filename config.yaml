@@ -26,7 +26,7 @@ Menus:
       url: /gallery
       weight: 2
 
-    #Dropdown menu:
+    # Dropdown menu:
     # - identifier: dropdown
     #   title: Example dropdown menu
     #   name: Dropdown
