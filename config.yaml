@@ -149,6 +149,25 @@ params:
     enable: true
     # title: "Custom Name"
     items:
+      - job: "Project Data Lead (Data Consulting Industrial Attachment)"
+        company: "Harrods (London)"
+        companyUrl: "https://www.nus.edu.sg/"
+        date: "Mar 2023 - Jun 2023"
+        featuredLink:
+          enable: false
+          name: "View the initiative"
+          url: "https://bizfaculty.nus.edu.sg/spire/"
+        info:
+          enable: true
+          content: This was the most enjoyable and enriching aspect of my Masters programme
+        content: |
+          During my Masters' industrial attachment in London, I led an ethnically (from 6 countries) and professionally (from computer science, economics, and consulting) diverse team to work with Harrod’s Insights Analytics and Data team on a persona lifecycle analysis project. The findings were eventually presented to their senior management
+          - Expanded upon the existing static company-adopted persona K-medoids clustering model to allow internal
+          stakeholders to determine a correct time to re-assign accurate personas to customers
+          - Feature engineered early predictors of key customer personas – new customers with 4 months of data are now at
+          least 5 times more likely to be correctly assigned initial personas – and delivered specific marketing campaign
+          recommendations for early customer acquisition
+    
       - job: "Research Assistant"
         company: "National University of Singapore"
         companyUrl: "https://www.nus.edu.sg/"
