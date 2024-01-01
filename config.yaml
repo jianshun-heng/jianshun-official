@@ -307,7 +307,7 @@ params:
 #  projects
   projects:
     enable: true
-      # title: Past works
+      title: Past works
     items:
       - title: Volatility Forecasting for Bitcoin
         content: The objective of this paper is to examine whether asymmetric (leverage) effects common in many asset classes are applicable in forecasting Bitcoin volatility, as well as to inspect the forecasting power of the models across various forecasting horizons.
