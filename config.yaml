@@ -149,6 +149,32 @@ params:
     enable: true
     # title: "Custom Name"
     items:
+      - job: "Data Science Intern"
+        company: "Decathlon"
+        companyUrl: "https://www.decathlon.sg/"
+        date: "Jul 2023 - Dec 2023"
+        featuredLink:
+          enable: false
+          name: "View the initiative"
+          url: "https://bizfaculty.nus.edu.sg/spire/"
+        info:
+          enable: true
+          content: I undertook this internship to learn how data intersects with business
+        content: |
+          - Spearheaded an unprecedented country-level fraud detection and refund abuse project involving fortnightly
+          discussions with operations manager and finance team; built an automated rule-based and Isolation Forest
+          model, and launched dashboards to minimise manual man-hour refund tracking
+              - Identified 2 past known fraud cases amounting to ~$10000 during backtesting and flagged more than
+          $100000 of refunds as potential abuse from customers
+          ○ Dashboards and findings were actively used at the leading team’s board meetings to propose a reversal
+          to and an implementation of 2 major company policies
+              - Helmed a joint venture with external statutory board SportSG through geographical dashboarding and crafting
+          strategic recommendations for the Swimming department. Presented findings to SportSG’s senior management
+          - Initiated a store expansion roadmap and presented prototype dashboard to country Expansion Leader; identified
+          2 prime locations for new store openings within the next business year
+          - Performed same-day data extraction (SQL) and big-data manipulation (Python and PySpark) for ad-hoc data
+          requests from various arms (CRM, Sustainability, Store Leaders, etc.
+          
       - job: "Project Data Lead (Data Consulting Industrial Attachment)"
         company: "Harrods (London)"
         companyUrl: "https://www.harrods.com/en-sg/"
@@ -167,7 +193,7 @@ params:
           - Feature engineered early predictors of key customer personas – new customers with 4 months of data are now at
           least 5 times more likely to be correctly assigned initial personas – and delivered specific marketing campaign
           recommendations for early customer acquisition
-    
+          
       - job: "Research Assistant"
         company: "National University of Singapore"
         companyUrl: "https://www.nus.edu.sg/"
