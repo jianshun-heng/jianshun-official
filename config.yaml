@@ -156,7 +156,7 @@ params:
         featuredLink:
           enable: false
           name: "View the initiative"
-          url: "https://bizfaculty.nus.edu.sg/spire/"
+          url: "https://www.decathlon.sg/"
         info:
           enable: true
           content: I undertook this internship to learn how data intersects with business
@@ -175,17 +175,17 @@ params:
           - Performed same-day data extraction (SQL) and big-data manipulation (Python and PySpark) for ad-hoc data
           requests from various arms (CRM, Sustainability, Store Leaders, etc.
 
-      - job: "Data Science Intern"
-        company: "Decathlon"
-        companyUrl: "https://www.decathlon.sg/"
-        date: "Jul 2023 - Dec 2023"
+      - job: "Project Data Lead (Data Consulting Industrial Attachment)"
+        company: "Harrods (London)"
+        companyUrl: "https://www.harrods.com/en-sg/"
+        date: "Mar 2023 - Jun 2023"
         featuredLink:
           enable: false
           name: "View the initiative"
-          url: "https://bizfaculty.nus.edu.sg/spire/"
+          url: "https://www.harrods.com/en-sg/"
         info:
           enable: true
-          content: I undertook this internship to learn how data intersects with business
+          content: This was the most enjoyable and enriching aspect of my Masters programme
         content: |
           - Spearheaded an unprecedented country-level fraud detection and refund abuse project involving fortnightly
           discussions with operations manager and finance team; built an automated rule-based and Isolation Forest
@@ -201,7 +201,7 @@ params:
           - Performed same-day data extraction (SQL) and big-data manipulation (Python and PySpark) for ad-hoc data
           requests from various arms (CRM, Sustainability, Store Leaders, etc.
           
-      - job: "Project Data Lead (Data Consulting Industrial Attachment)"
+      - job: "test"
         company: "Harrods (London)"
         companyUrl: "https://www.harrods.com/en-sg/"
         date: "Mar 2023 - Jun 2023"
