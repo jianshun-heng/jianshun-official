@@ -3,6 +3,12 @@ date: "2022-06-25T18:35:46+05:30"
 description: 'My gallery :earth_asia:'
 draft: false
 images:
+- src: /images/Gallery/Sun7.jpg
+- src: /images/Gallery/Sun8.jpg
+- src: /images/Gallery/Sun9.jpg
+- src: /images/Gallery/Snow4.jpg
+- src: /images/Gallery/Snow5.jpg
+- src: /images/Gallery/Snow6.jpg
 - src: /images/Gallery/Sun1.jpg
 - src: /images/Gallery/Sun2.jpg
 - src: /images/Gallery/Sun3.jpg
