@@ -166,6 +166,8 @@ params:
           enable: true
           content: I undertook this internship to learn how data intersects with business
         content: |
+          While seeking out Analytics roles, I was fortunate to be considered for and offered a data science internship by sporting retail giant Decathlon. Naturally, I jumped upon this opportunity since I had always wanted to fully understand how data science contributes to business decisions.
+          
           - Spearheaded an unprecedented country-level fraud detection and refund abuse project involving fortnightly
           discussions with operations manager and finance team; built an automated rule-based and Isolation Forest
           model, and launched dashboards to minimise manual man-hour refund tracking
