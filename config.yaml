@@ -362,6 +362,20 @@ params:
     enable: true
       # title: Past works
     items:
+      - title: London Housing Price Predictions
+        content: This work is the write-up for my project to predict housing prices in London. The corresponding R codes can be found in the R projects section.
+        image: /images/projects/housing.jpeg
+        featured:
+          name: Paper
+          link: /London Housing Price Predictions project.docx
+        badges:
+          - "Predictions"
+          - "Housing"
+          - "Machine Learning"
+          - "R"
+        links:
+          # - icon: fa fa-envelope
+    
       - title: Volatility Forecasting for Bitcoin
         content: The objective of this paper is to examine whether asymmetric (leverage) effects common in many asset classes are applicable in forecasting Bitcoin volatility, as well as to inspect the forecasting power of the models across various forecasting horizons.
         image: /images/projects/volatility.png
