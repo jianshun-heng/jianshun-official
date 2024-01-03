@@ -343,9 +343,11 @@ params:
     enable: true
     # title: "Additional Information"
     items:
+      - title: Table tennis competitive player
+        content: Trained with various table tennis interest groups and participated in inter-faculty (University) and inter-CC (Community Club) tournaments over a span of 6 years
       - title: Captain of Junior College Tchoukball team
         content: Led team to win league 2 years in a row. 
-        url: https://www.tchoukball.org.uk/how-to-play/
+        url: https://en.wikipedia.org/wiki/Tchoukball
       - title: Coach and Manager (Tchoukball)
         content: Held coach and team manager roles in 8 different tchoukball teams over 6 years; these teams achieved various podium finishes in various annual leagues
       - title: Simulations modeller
