@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 description: "This was a project that I had done on housing price predictions in London"
 draft: false
 #github_link: https://github.com/gurusabarish/hugo-profile
-image: /images/GDP.jpeg
+image: /images/housing.jpeg
 tags:
 - Prediction
 - Housing
