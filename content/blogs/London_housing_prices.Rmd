@@ -1,0 +1,802 @@
+---
+author: Jian Shun
+date: "`r Sys.Date()`"
+description: "This was a project that I had done on housing price predictions in London"
+draft: false
+#github_link: https://github.com/gurusabarish/hugo-profile
+image: /images/housing.jpeg
+tags:
+- Prediction
+- Housing
+- Machine Learning
+title: London Housing Price Predictions
+toc: null
+
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{=html}
+<style>
+div.navy1 { background-color:#686868; border-radius: 5px; padding: 20px; border-style: groove; color: #ffffff;}
+
+</style>
+```
+```{r, load_libraries, include = FALSE}
+
+if(!is.element("tidyverse", installed.packages()[,1]))
+{  install.packages("tidyverse", repos = "http://cran.us.r-project.org")}
+
+if(!is.element("Hmisc", installed.packages()[,1]))
+{  install.packages("Hmisc", repos = "http://cran.us.r-project.org")} #package for data summary using `describe`
+
+if(!is.element("ggplot2", installed.packages()[,1]))
+{  install.packages("ggplot2", repos = "http://cran.us.r-project.org")} #package for plots
+if(!is.element("ggthemes", installed.packages()[,1]))
+{  install.packages("ggthemes", repos = "http://cran.us.r-project.org")} #package to make fancier ggplots
+
+if(!is.element("janitor", installed.packages()[,1]))
+{ install.packages("janitor", repos = "http://cran.us.r-project.org")} #package to visualize results of machine learning tools
+if(!is.element("rpart.plot", installed.packages()[,1]))
+{  install.packages("rpart.plot", repos = "http://cran.us.r-project.org")} #package to visualize trees
+
+if(!is.element("ggtext", installed.packages()[,1]))
+{  install.packages("ggtext", repos = "http://cran.us.r-project.org")} #package to visualize trees
+if(!is.element("patchwork", installed.packages()[,1]))
+{  install.packages("patchwork", repos = "http://cran.us.r-project.org")} #package to visualize trees
+
+library(rpart.plot)
+library(caret)
+library(tidyverse) # the usual stuff: dplyr, readr, and other goodies
+library(lubridate)
+library(janitor) # clean_names()
+library(Hmisc)
+library(ggtext)
+library(patchwork)
+
+options(scipen = 999)
+```
+
+# Introduction and learning objectives
+
+::: navy1
+The purpose of this project is to build an estimation engine to guide investment decisions in London house market. We first build machine learning algorithms (and tune them) to estimate the house prices given variety of information about each property. Then, using the selected algorithm, I choose 200 houses to invest in out of about 2000 houses on the market at the moment.
+
+<b>Learning objectives</b>
+
+<ol type="i">
+
+<li>Using different data mining algorithms for prediction.</li>
+
+<li>Dealing with large data sets</li>
+
+<li>Tuning data mining algorithms</li>
+
+<li>Interpreting data mining algorithms and deducing importance of variables</li>
+
+<li>Using results of data mining algorithms to make business decisions</li>
+
+</ol>
+:::
+
+# Load data
+
+There are two sets of data, i) training data that has the actual prices ii) out of sample data that has the asking prices. Load both data sets.
+
+
+```{r read-investigate}
+#read in the data
+
+# london_house_prices_2019_training<-read.csv("training_data_assignment_with_prices.csv")
+# london_house_prices_2019_out_of_sample<-read.csv("test_data_assignment.csv")
+
+london_house_prices_2019_training<- read_csv(here::here("data", "training_data_assignment_with_prices.csv"))
+london_house_prices_2019_out_of_sample<-read_csv(here::here("data", "test_data_assignment.csv"))
+
+#fix data types in both data sets
+
+#fix dates
+london_house_prices_2019_training <- london_house_prices_2019_training %>% mutate(date=as.Date(date))
+london_house_prices_2019_out_of_sample<-london_house_prices_2019_out_of_sample %>% mutate(date=as.Date(date))
+#change characters to factors
+london_house_prices_2019_training <- london_house_prices_2019_training %>% mutate_if(is.character,as.factor)
+london_house_prices_2019_out_of_sample<-london_house_prices_2019_out_of_sample %>% mutate_if(is.character,as.factor)
+
+#take a quick look at what's in the data
+str(london_house_prices_2019_training)
+str(london_house_prices_2019_out_of_sample)
+
+
+
+```
+
+Set a seed for reproducibility
+
+```{r split the price data to training and testing}
+#initial split
+library(rsample)
+set.seed(100)
+train_test_split <- initial_split(london_house_prices_2019_training, prop = 0.75) #training set contains 75% of the data
+# Create the training dataset
+train_data <- training(train_test_split)
+test_data <- testing(train_test_split)
+
+
+
+```
+
+# Visualize data
+Visualize and examine the data
+
+```{r visualize}
+skimr::skim(train_data)
+
+#plot distribution of property prices
+ggplot(london_house_prices_2019_training, aes(x = price)) +
+  geom_density() +
+  theme_minimal() +
+  labs(title = "Distribution of housing prices in 2019",
+       x = "Price of property") +
+  theme_minimal() +
+  theme(plot.title.position = "plot",
+        plot.title = element_textbox_simple(size = 14),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        )
+```
+
+Let's visualise the top 10 most expensive and bottom 10 least expensive districts in terms of average housing prices.
+
+```{r top 10 most expensive and least expensive districts}
+# Most expensive 10 districts
+top10districts <- london_house_prices_2019_training %>% 
+  group_by(district) %>%
+  summarise(average_price = mean(price)) %>%
+  ungroup %>% 
+  arrange(desc(average_price)) %>% 
+  slice_max(average_price, n = 10) %>% 
+  ungroup()
+top10districts
+
+top_plot <- ggplot(top10districts, aes(x = average_price, y = fct_reorder(district, average_price))) +
+  geom_col(fill = "red") +
+  labs(
+    title = "<b>Most expensive 10 districts</b>",
+    x = "Average housing price") +
+  theme_minimal() +
+  theme(plot.title.position = "plot",
+        plot.title = element_textbox_simple(size = 14),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        strip.background =element_rect(fill="black"),
+        strip.text = element_text(colour = "white")
+        )
+
+# Least expensive 10 districts
+bot10districts <- london_house_prices_2019_training %>% 
+  group_by(district) %>%
+  summarise(average_price = mean(price)) %>%
+  ungroup %>% 
+  arrange(average_price) %>% 
+  slice_min(average_price, n = 10) %>% 
+  ungroup()
+bot10districts
+
+bot_plot <- ggplot(bot10districts, aes(x = average_price, y = fct_reorder(district, average_price))) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "<b>Least expensive 10 districts</b>",
+    x = "Average housing price") +
+  theme_minimal() +
+  theme(plot.title.position = "plot",
+        plot.title = element_textbox_simple(size = 14),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        strip.background =element_rect(fill="black"),
+        strip.text = element_text(colour = "white")
+        )
+
+#patchwork plot
+top_plot + bot_plot
+```
+
+Estimate a correlation table between prices and other continuous variables
+
+```{r, correlation table, warning=FALSE, message=FALSE}
+
+# correlation matrix
+library("GGally")
+london_house_prices_2019_training %>% 
+  select(-c(ID, london_zone, altitude, population, energy_consumption_current, energy_consumption_potential, co2_emissions_potential, total_floor_area)) %>% #keep Y variable last
+  ggcorr(method = c("pairwise", "pearson"), layout.exp = 2,label_round=2, label = TRUE,label_size = 2,hjust = 1,nbreaks = 5,size = 2,angle = -20)
+
+```
+
+# Model selection - An overview
+
+The models that I will be testing will be:
+
+1.  Regression
+
+    -   Linear regression (base)
+
+2.  Tree models
+
+    -   Tree model (Base)
+
+3.  KNN model
+
+4.  LASSO Regression
+
+5.  Tree-based ensemble
+
+    -   Random Forest
+
+    -   Boosting
+
+    -   xgBoost
+
+Let us define control parameters here.
+
+```{r defining control}
+#Define control variables
+control <- trainControl (
+    method = "cv",
+    number = 10,
+    verboseIter = FALSE) #by setting this to false the model will not report its progress after each estimation
+
+```
+
+# Linear regression model (base)
+
+To get started, I build a linear regression model below, choosing a subset of the features with no particular goal. These parameters and values form the basis as my benchmark model, with certain aspects that I define below.
+
+-   I have chosen the number of folds for cross validation as 10.
+
+-   I have added in additional features comprising:
+
+    -   Proxies for convenience through variables concerning public transportation - num_tube_lines, num_rail_lines, num_light_rail_lines These variables are important since it explains if the location of the property is close to an interchange. I would expect the prices of properties closer to interchanges to be more expensive since this creates an ability for residents to better commute to and from work with ease.
+
+    -   Proxies for affluence of neighbourhood - average_income, co2_emissions_current, districts
+
+    -   Condition/Type of house/property - number_habitable_rooms, windows_energy_eff, tenure
+
+```{r LR model}
+set.seed(100)
+model1_lm<-train(
+  price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+  data = train_data,
+  method = "lm",
+  trControl = control
+   )
+
+# summary of the results
+summary(model1_lm)
+
+# we can check variable importance as well
+varImp(model1_lm)$importance %>% 
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  arrange(Overall) %>%
+  mutate(rowname = forcats::fct_inorder(rowname)) %>%
+  slice_max(Overall, n = 20) %>% 
+  ggplot()+
+    geom_col(aes(x = rowname, y = Overall)) +
+    labs(y = "Importance", x = "") +
+    coord_flip() +
+    theme_bw()
+```
+
+## Predict the values in testing and out of sample data
+
+Below I use the predict function to test the performance of the model in testing data and summarize the performance of the linear regression model
+
+```{r linear regression testing}
+# predict testing values and RMSE
+predictions <- predict(model1_lm,test_data)
+
+lr_results<-data.frame(RMSE = RMSE(predictions, test_data$price), 
+                       Rsquare = R2(predictions, test_data$price))
+                            
+lr_results                         
+```
+
+# Tree model (base) Model
+
+Next I fit a tree model with some new variables introduced. This will be my base tree model for reference.
+
+```{r tree model}
+set.seed(100)
+base_tree <- train(
+  price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+  data = train_data,
+  method = "rpart",
+  trControl = control,
+  tuneLength=10
+    )
+
+#view tree performance
+base_tree$results
+base_tree$coefnames
+
+#Yview base tree
+rpart.plot(base_tree$finalModel)
+
+# predict testing values and RMSE
+predictions_tree <- predict(base_tree,test_data)
+
+tree_results<-data.frame(RMSE = RMSE(predictions_tree, test_data$price), 
+                         Rsquare = R2(predictions_tree, test_data$price))
+
+tree_results     
+
+```
+
+# 
+
+After creating the base tree model, I now proceed to tune the complexity parameter (cp) for the optimal tree model.
+
+# Optimal tree (tuning cp) Model
+
+```{r tuning cp for trees}
+# Plot model metric vs different values of cp (complexity parameter)
+
+#we can display the performance of the tree algorithm as a function of cp
+print(base_tree)
+#or plot the results
+plot(base_tree)
+
+
+modelLookup("rpart")
+
+# Let's set reasonable values for 'cp'
+trctrl <- trainControl(method = "cv", 
+                       number = 10, 
+                       verboseIter = FALSE)
+
+#I choose cp values that seems to result in low error based on plot above
+Grid <- expand.grid(cp = seq(0.0000, 0.0030,0.0001))
+
+model2_dtree <- train(price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure, 
+                   data = train_data, 
+                   method = "rpart",
+                   trControl = trctrl,
+                   tuneGrid = Grid) 
+
+# Print the search results of 'train' function
+plot(model2_dtree) 
+print(model2_dtree)
+
+# Check variable importance
+varImp(model2_dtree)$importance %>% 
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  arrange(Overall) %>%
+  mutate(rowname = forcats::fct_inorder(rowname)) %>%
+  slice_max(Overall, n = 20) %>% 
+  ggplot()+
+    geom_col(aes(x = rowname, y = Overall)) +
+    labs(y = "Importance", x = "") +
+    coord_flip() +
+    theme_bw()
+
+
+# Calculate testing predictions and RMSE
+predictions_dtree_cp <- predict(model2_dtree,test_data)
+
+dtree_cp_results<-data.frame(RMSE = RMSE(predictions_dtree_cp, test_data$price), 
+                             Rsquare = R2(predictions_dtree_cp, test_data$price))
+                            
+dtree_cp_results
+
+```
+
+# KNN Model
+
+-   <div>
+
+    ```{r KNN Model}
+    set.seed(100)
+
+    #knn model
+    knn <- train(
+      price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+      data = train_data, 
+      method = "knn",
+      trControl = control, #use 10 fold cross validation
+      tuneLength = 10, #number of parameter values train function will try
+      preProcess = c("center", "scale"))  #center and scale the data in k-nn this is pretty important
+
+    knn
+    plot(knn) #we can plot the results
+
+    suppressMessages(library(caret))
+    modelLookup("knn") #It is always a good idea to check the tunable parameters of an algorithm
+
+    # I will store the values of k I want to experiment with in knnGrid
+
+    knnGrid <-  expand.grid(k= seq(1,100 , by = 5))
+
+    # By fixing the see I can re-generate the results when needed
+    set.seed(100)
+    fit_KNN <- train(price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+      data=train_data,
+                     preProcess = c("center", "scale"), 
+                     method="knn", 
+                     trControl=control,
+                     tuneGrid = knnGrid)
+    # display results
+    print(fit_KNN)
+    # plot results
+    plot(fit_KNN)
+
+
+    # Try a subsetted grid after seeing the plot
+    knnGrid_subset <-  expand.grid(k= seq(6,16 , by = 1))
+
+    set.seed(100)
+    model3_knn <- train(price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+      data = train_data,
+                     preProcess = c("center", "scale"), 
+                     method="knn", 
+                     trControl=control,
+                     tuneGrid = knnGrid_subset)
+
+    # display results
+    print(model3_knn)
+    # plot results
+    plot(model3_knn)
+
+    # I can now confirm that k = 11 is the optimal number of nearest neighbours for lowest validation RMSE
+
+    # Calculate testing Wpredictions and RMSE
+    predictions_knn <- predict(model3_knn,test_data)
+
+    knn_results<-data.frame(RMSE = RMSE(predictions_knn, test_data$price), 
+                            Rsquare = R2(predictions_knn, test_data$price))
+                                
+    knn_results     
+
+    # # we can check variable importance as well
+    # varImp(model3_knn)$importance %>% 
+    #   as.data.frame() %>%
+    #   rownames_to_column() %>%
+    #   arrange(Overall) %>%
+    #   mutate(rowname = forcats::fct_inorder(rowname)) %>%
+    #   slice_max(Overall, n = 20) %>% 
+    #   ggplot()+
+    #     geom_col(aes(x = rowname, y = Overall)) +
+    #     labs(y = "Importance", x = "") +
+    #     coord_flip() +
+    #     theme_bw()
+    
+    ```
+
+    </div>
+
+# LASSO Model
+
+```{r lasso model}
+lambda_seq <- seq(0, 0.01, length = 1000)
+
+# lasso regression using k-fold cross validation to select the best lambda
+set.seed(100)
+model4_lasso <- train(
+  price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+ data = train_data,
+ method = "glmnet",
+  preProc = c("center", "scale"), #This option standardizes the data before running the LASSO regression
+  trControl = control,
+  tuneGrid = expand.grid(alpha = 1, lambda = lambda_seq) #alpha=1 specifies to run a LASSO regression.
+  )
+
+# Model coefficients
+coef(model4_lasso$finalModel, model4_lasso$bestTune$lambda)
+
+# Best lambda
+model4_lasso$bestTune$lambda
+
+# Count of how many coefficients are greater than zero and how many are equal to zero
+
+sum(coef(model4_lasso$finalModel, model4_lasso$bestTune$lambda)!=0)
+sum(coef(model4_lasso$finalModel, model4_lasso$bestTune$lambda)==0)
+
+# Make predictions
+predictions_lasso <- predict(model4_lasso, test_data)
+
+# Model prediction performance
+
+lasso_results <- data.frame(RMSE = RMSE(predictions_lasso, test_data$price),
+                            Rsquare = R2(predictions_lasso, test_data$price))
+
+lasso_results
+
+# we can check variable importance as well
+varImp(model4_lasso)$importance %>% 
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  arrange(Overall) %>%
+  mutate(rowname = forcats::fct_inorder(rowname)) %>%
+  slice_max(Overall, n = 20) %>% 
+  ggplot()+
+    geom_col(aes(x = rowname, y = Overall)) +
+    labs(y = "Importance", x = "") +
+    coord_flip() +
+    theme_bw()
+
+
+```
+
+# Random Forest Model
+
+```{r random forest}
+# The following function gives the list of tunable parameters
+modelLookup("ranger")
+
+# Define the tuning grid: tuneGrid
+# Let's do a search on 'mtry'; number of variables to use in each split
+gridRF <- data.frame(
+  .mtry = c(2:7),
+  .splitrule = "variance",
+  .min.node.size = 5
+)
+
+set.seed(100)
+# Fit random forest: model= ranger using caret library anf train function
+model5_rf <- train(
+  price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure,
+  data = train_data,
+  method = "ranger",
+  trControl = control,
+  tuneGrid = gridRF,
+  importance = 'permutation' 
+  #This is the method used to determine variable importance.
+  #Permutation=leave one variable out and fit the model again
+)
+
+# Print model to console
+varImp(model5_rf)
+
+plot(varImp(model5_rf))
+
+summary(model5_rf)
+print(model5_rf)
+
+# Calculate testing predictions and RMSE
+predictions_rf <- predict(model5_rf, test_data)
+
+rf_results<-data.frame(RMSE = RMSE(predictions_rf, test_data$price), 
+                       Rsquare = R2(predictions_rf, test_data$price))
+                            
+rf_results
+
+# check variable importance
+varImp(model5_rf)$importance %>% 
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  arrange(Overall) %>%
+  mutate(rowname = forcats::fct_inorder(rowname)) %>%
+  slice_max(Overall, n = 20) %>% 
+  ggplot()+
+    geom_col(aes(x = rowname, y = Overall)) +
+    labs(y = "Importance", x = "") +
+    coord_flip() +
+    theme_bw()
+
+```
+
+# Gradient Boosting Model
+
+```{r gradient boosting}
+modelLookup("gbm")
+
+#Expand the search grid (see above for definitions)
+
+grid<-expand.grid(interaction.depth = c(3:7), n.trees = seq(150,250,10), shrinkage = 0.075, n.minobsinnode = 10)
+
+set.seed(100)
+#Train for gbm
+model6_gbm <- train(price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure, 
+                 data = train_data,
+                 method = "gbm", 
+                 trControl = control,
+                 tuneGrid = grid,
+                 verbose = FALSE
+                 )
+print(model6_gbm)
+
+# Calculate testing predictions and RMSE
+predictions_boost = predict(model6_gbm, test_data)
+
+boost_results<-data.frame(RMSE = RMSE(predictions_boost, test_data$price), 
+                          Rsquare = R2(predictions_boost, test_data$price))
+
+boost_results  
+
+# # check variable importance
+# varImp(model6_gbm, numTrees = 250)$importance %>% 
+#   as.data.frame() %>%
+#   rownames_to_column() %>%
+#   arrange(Overall) %>%
+#   mutate(rowname = forcats::fct_inorder(rowname)) %>%
+#   slice_max(Overall, n = 20) %>% 
+#   ggplot()+
+#     geom_col(aes(x = rowname, y = Overall)) +
+#     labs(y = "Importance", x = "") +
+#     coord_flip() +
+#     theme_bw()
+
+
+
+
+# set.seed(100)
+# boost.fit <- gbm(price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure, 
+#                data = train_data,
+#                distribution = "gaussian",
+#                interaction.depth = 6,n.trees = 10000,shrinkage = 0.075, n.minobsinnode = 10, cv.folds = 10
+#                  )
+# 
+# print(boost.fit)
+# 
+# bestoob = gbm.perf(boost.fit, method = "OOB")
+# bestoob
+# 
+# 
+# boostoob.pred = predict(boost.fit, newdata = test_data, n.trees = bestoob, type = "response")
+# 
+# oobboost_results<-data.frame(RMSE = RMSE(boostoob.pred, test_data$price), 
+#                              Rsquare = R2(boostoob.pred, test_data$price))
+# 
+# oobboost_results   
+
+```
+
+# xgBoost Model
+
+Here, I try an xgboost model to compare how another version of gradient boosting measures up against its counterpart.
+
+```{r xgboost}
+library(xgboost)
+trainlabels = train_data$price
+testlabels = test_data$price
+train_matrix <- train_data %>% 
+  select(c(distance_to_station, water_company, property_type, whether_old_or_new, freehold_or_leasehold, latitude, longitude, num_tube_lines, num_rail_lines, num_light_rail_lines, average_income, co2_emissions_current, number_habitable_rooms, district, windows_energy_eff, tenure
+  )) %>% 
+  data.matrix(.)
+dtrain = xgb.DMatrix(data = train_matrix, label = trainlabels)
+
+test_matrix <- test_data %>% 
+  select(c(distance_to_station, water_company, property_type, whether_old_or_new, freehold_or_leasehold, latitude, longitude, num_tube_lines, num_rail_lines, num_light_rail_lines, average_income, co2_emissions_current, number_habitable_rooms, district, windows_energy_eff, tenure
+  )) %>% 
+  data.matrix(.)
+dtest = xgb.DMatrix(data = test_matrix, label = testlabels)
+
+model7_xgboost = xgboost(data = dtrain, max.depth = 3, nrounds = 99, objective = "reg:squarederror", eval_metric = "rmse")
+
+predictions_xgboost = predict(model7_xgboost, dtest)
+
+xgboost_results<-data.frame(RMSE = RMSE(predictions_xgboost, test_data$price), 
+                            Rsquare = R2(predictions_xgboost, test_data$price))
+                            
+xgboost_results
+```
+
+# RMSE result tabulation
+
+```{r result tabulation}
+overall_results <- rbind(lr_results, dtree_cp_results, knn_results, lasso_results, rf_results, boost_results, xgboost_results)
+rownames(overall_results) = c("linear", "cp tree", "knn", "lasso", "rf", "gbm", "xgboost")
+
+overall_results
+```
+
+Gradient boosting model is the clear winner here.
+
+# Stacking
+
+Use stacking to ensemble your algorithms.
+
+```{r stacking,warning=FALSE,  message=FALSE }
+library("caretEnsemble")
+my_control <- trainControl(
+    method = "cv",
+    number = 10,
+    savePredictions="final",
+    verboseIter = FALSE
+  )
+
+#To implement stacking first train all the models you will use
+set.seed(100)
+model_list <- caretList(
+  price ~ distance_to_station + water_company + property_type + whether_old_or_new + freehold_or_leasehold + latitude + longitude + num_tube_lines + num_rail_lines + num_light_rail_lines + average_income + co2_emissions_current + number_habitable_rooms + district + windows_energy_eff + tenure, 
+  data = train_data,
+  trControl = my_control, #Control options
+  methodList = c("glm"), # Models in stacking: glm=logistic regression
+  tuneList = list(
+    knn = caretModelSpec(method = "knn", tuneGrid = data.frame(k = 11), verbose = FALSE), #knn with tuned parameters
+    gbm = caretModelSpec(method = "gbm", tuneGrid = data.frame(interaction.depth = 7, n.trees = 250,shrinkage = 0.075, n.minobsinnode = 10), verbose = FALSE), #gbm with tuned parameters
+    ranger = caretModelSpec(method="ranger", tuneGrid = data.frame(mtry = 7, splitrule = "variance", min.node.size = 5)), #Random forest with tuned parameters
+    rpart = caretModelSpec(method = "rpart", tuneGrid = data.frame(cp = 0))) #Tree with tuned parameters
+  )
+
+
+  
+#Let's look at what information is kept in model_list
+  typeof(model_list)
+  summary(model_list)
+#Check ranger model for example
+  summary(model_list$ranger)
+  typeof(model_list$ranger)
+  print(model_list$ranger$bestTune)
+  
+     
+# Fortunately caret package has various functions to display relative performance of multiple methods
+
+# To use them we need to put all results together in a list first
+  resamples <- resamples(model_list)
+  typeof(resamples)
+  summary(resamples)
+
+# We can use dotplots
+  dotplot(resamples)
+# We can use box plots  
+  bwplot(resamples)	
+#or correlations    
+  modelCor(resamples)
+#We can visualize results in scatter plots as well
+  splom(resamples)
+  
+#Now we can put all the results together and stack them
+glm_ensemble <- caretStack(
+    model_list, #Models we trained above in caretList 
+    method = "glm", #Use logistic regression to combine
+    trControl = my_control
+  )
+  
+  summary(glm_ensemble) 
+
+
+# Calculate predictions and RMSE
+predictions_ensemble <- predict(glm_ensemble, test_data)
+
+ensemble_results<-data.frame(RMSE = RMSE(predictions_ensemble, test_data$price), 
+                             Rsquare = R2(predictions_ensemble, test_data$price))
+                            
+ensemble_results     
+
+
+
+```
+
+# Pick investments
+
+In this section I use the best algorithm identified to choose 200 properties from the out of sample data.
+
+```{r,warning=FALSE,  message=FALSE }
+numchoose = 200
+
+oos <- london_house_prices_2019_out_of_sample
+  
+#predict the value of houses
+oos$predict <- predict(glm_ensemble,oos)
+#Choose the ones you want to invest here
+#Make sure you choose exactly 200 of them
+
+selection <- oos %>% 
+  mutate(expected_profit = (predict - asking_price) / asking_price) %>%
+  mutate(buy = ifelse(rank(desc(expected_profit)) <= numchoose, 1, 0))
+  
+#output choices
+#write.csv(selection,"best_predictions.csv")
+```
