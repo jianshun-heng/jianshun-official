@@ -367,7 +367,7 @@ params:
         image: /images/projects/housing.jpeg
         featured:
           name: Paper
-          link: /London Housing Price Predictions project.docx
+          link: /London Housing Price Predictions project.pdf
         badges:
           - "Predictions"
           - "Housing"
