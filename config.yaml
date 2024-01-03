@@ -129,7 +129,7 @@ params:
     image: /images/Me_HP.jpg
     content: |-
       A little information on myself!
-      Originally, I graduated with an Economics undergraduate degree before venturing into Academia; I took up a position as a former research assistant in Marketing and worked on various projects then. 
+      Originally, I graduated with an Economics undergraduate degree before venturing into Academia; I took up a position as a former research assistant in Marketing and worked on various projects then; this was in preparation for a PhD candidature. 
       While experiencing work as an Academic researcher, I learnt that I yearned to contribute to business organisations; I decided to leave Academia and venture into the realm of Analytics and Consultancy in hopes of developing my potential at making an impact on society.
       Thereafter, I completed my [Masters in Analytics and Management](https://www.london.edu/masters-degrees/masters-in-analytics-and-management) at [London Business School](https://www.london.edu/) and ventured into a data science role to better understand how data drives business. 
       Armed with my newfound experiences, I now aspire to drive business actions and develop business solutions through rigourous data analysis and accurate data reporting, all the while remembering that the narrative is king.
@@ -148,7 +148,6 @@ params:
         - "Github"
         - "Anylogic"
         - "Vensim"
-        - "Microsoft Office"
 
   # Experience
   experience:
