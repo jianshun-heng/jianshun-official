@@ -98,9 +98,9 @@ params:
   # Hero
   hero:
     enable: true
-    intro: "This is the story of "
+    intro: false
     title: "Jian Shun"
-    subtitle: "Please enjoy your stay!"
+    subtitle: "Former Researcher | Trained Data Scientist | Aspiring Analyst"
     content: "All models are wrong, but some are useful - George E.P. Box"
     image: /images/ProfileMe.jpg
     button:
